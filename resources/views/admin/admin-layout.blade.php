@@ -70,6 +70,35 @@
             </div>
         </li>
 
+        <li class="nav-item active">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages2" aria-expanded="true" aria-controls="collapsePages2">
+                <i class="fas fa-fw fa-warehouse"></i>
+                <span>Склад</span>
+            </a>
+            <div id="collapsePages2" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="#">Поставщики</a>
+                    <a class="collapse-item" href="#">Поставки</a>
+                    <a class="collapse-item" href="#">Списания</a>
+                    <a class="collapse-item" href="#">Остатки</a>
+                    <a class="collapse-item" href="#">Инвентаризации</a>
+                </div>
+            </div>
+        </li>
+
+        <li class="nav-item active">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages2" aria-expanded="true" aria-controls="collapsePages2">
+                <i class="fas fa-fw fa-warehouse"></i>
+                <span>Группа клиентов</span>
+            </a>
+            <div id="collapsePages2" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="#">Клиенты</a>
+                    <a class="collapse-item" href="#">Бронирование столов</a>
+                </div>
+            </div>
+        </li>
+
         <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">
             <button class="rounded-circle border-0" id="sidebarToggle"></button>
