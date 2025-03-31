@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Cafe Flow - Главная</title>
+    <title>Cafe Flow</title>
 
     <!-- Custom fonts for this template-->
     <link href={{asset("admin-assets/vendor/fontawesome-free/css/all.min.css")}} rel="stylesheet" type="text/css">
@@ -40,61 +40,55 @@
         <hr class="sidebar-divider my-0">
 
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
+        <li class="nav-item {{ request()->routeIs('start') ? 'active' : '' }}">
             <a class="nav-link collapsed" href="{{route('start')}}">
                 <i class="fas fa-info"></i>
                 <span>Старт</span></a>
         </li>
-        <li class="nav-item active">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+        <li class="nav-item {{ request()->routeIs('employees.index') ? 'active' : '' }}">
+            <a class="nav-link" href="{{route('employees.index')}}">
                 <i class="fas fa-fw fa-users"></i>
-                <span>Сотрудники</span>
-            </a>
-            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="login.html">Login</a>
-                </div>
-            </div>
+                <span>Сотрудники</span></a>
         </li>
-        <li class="nav-item active">
+        <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages1" aria-expanded="true" aria-controls="collapsePages1">
                 <i class="fas fa-fw fa-table"></i>
                 <span>Каталог</span>
             </a>
-            <div id="collapsePages1" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div id="collapsePages1" class="collapse {{ request()->routeIs('products.index') || request()->routeIs('tech-maps.index') || request()->routeIs('semimanufactures.index') ? 'show' : '' }}" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="#">Товары</a>
-                    <a class="collapse-item" href="#">Техкарты</a>
-                    <a class="collapse-item" href="#">Полуфабрикаты</a>
+                    <a class="collapse-item {{ request()->routeIs('products.index') ? 'active' : '' }}" href="{{route('products.index')}}">Товары</a>
+                    <a class="collapse-item {{ request()->routeIs('tech-maps.index') ? 'active' : '' }}" href="{{route('tech-maps.index')}}">Техкарты</a>
+                    <a class="collapse-item {{ request()->routeIs('semimanufactures.index') ? 'active' : '' }}" href="{{route('semimanufactures.index')}}">Полуфабрикаты</a>
                 </div>
             </div>
         </li>
 
-        <li class="nav-item active">
+        <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages2" aria-expanded="true" aria-controls="collapsePages2">
                 <i class="fas fa-fw fa-warehouse"></i>
                 <span>Склад</span>
             </a>
-            <div id="collapsePages2" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div id="collapsePages2" class="collapse {{ request()->routeIs('suppliers.index') || request()->routeIs('delivers.index') || request()->routeIs('write_offs.index') || request()->routeIs('remains.index') || request()->routeIs('inventory.index') ? 'show' : '' }}" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="#">Поставщики</a>
-                    <a class="collapse-item" href="#">Поставки</a>
-                    <a class="collapse-item" href="#">Списания</a>
-                    <a class="collapse-item" href="#">Остатки</a>
-                    <a class="collapse-item" href="#">Инвентаризации</a>
+                    <a class="collapse-item {{ request()->routeIs('suppliers.index') ? 'active' : '' }}" href="{{route('suppliers.index')}}">Поставщики</a>
+                    <a class="collapse-item {{ request()->routeIs('delivers.index') ? 'active' : '' }}" href="{{route('delivers.index')}}">Поставки</a>
+                    <a class="collapse-item {{ request()->routeIs('write_offs.index') ? 'active' : '' }}" href="{{route('write_offs.index')}}">Списания</a>
+                    <a class="collapse-item {{ request()->routeIs('remains.index') ? 'active' : '' }}" href="{{route('remains.index')}}">Остатки</a>
+                    <a class="collapse-item {{ request()->routeIs('inventory.index') ? 'active' : '' }}" href="{{route('inventory.index')}}">Инвентаризации</a>
                 </div>
             </div>
         </li>
 
-        <li class="nav-item active">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages2" aria-expanded="true" aria-controls="collapsePages2">
-                <i class="fas fa-fw fa-warehouse"></i>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages3" aria-expanded="true" aria-controls="collapsePages3">
+                <i class="fas fa-fw fa-handshake"></i>
                 <span>Группа клиентов</span>
             </a>
-            <div id="collapsePages2" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div id="collapsePages3" class="collapse {{request()->routeIs('сlients.index') || request()->routeIs('reservations.index') ? 'show' : '' }}" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="#">Клиенты</a>
-                    <a class="collapse-item" href="#">Бронирование столов</a>
+                    <a class="collapse-item {{ request()->routeIs('сlients.index') ? 'active' : '' }}" href="{{route('сlients.index')}}">Клиенты</a>
+                    <a class="collapse-item {{ request()->routeIs('reservations.index') ? 'active' : '' }}" href="{{route('reservations.index')}}">Бронирование столов</a>
                 </div>
             </div>
         </li>

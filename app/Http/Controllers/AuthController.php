@@ -16,7 +16,7 @@ class AuthController extends Controller
                 'password' => $request['password']
             ])
         ) {
-            return to_route('main')->with('success', 'Вход успешен');
+            return to_route('start')->with('success', 'Вход успешен');
         }
 
         return redirect()->back();
