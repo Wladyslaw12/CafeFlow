@@ -13,6 +13,7 @@ class Deliver extends Model
         'document_number',
         'suppliers_id',
         'payment_status',
-        'comment'
+        'comment',
+        'establishment_id',
     ];
 }

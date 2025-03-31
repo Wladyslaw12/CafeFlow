@@ -11,5 +11,6 @@ class Table extends Model
 
     protected $fillable = [
         'title',
+        'establishment_id',
     ];
 }

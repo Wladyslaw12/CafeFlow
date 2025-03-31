@@ -12,6 +12,7 @@ class WriteOffProduct extends Model
     protected $fillable = [
         'product_id',
         'write_off_id',
-        'count'
+        'count',
+        'establishment_id',
     ];
 }

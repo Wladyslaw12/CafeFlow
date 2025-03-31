@@ -45,10 +45,17 @@
                 <i class="fas fa-info"></i>
                 <span>Старт</span></a>
         </li>
-        <li class="nav-item {{ request()->routeIs('employees.index') ? 'active' : '' }}">
-            <a class="nav-link" href="{{route('employees.index')}}">
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages10" aria-expanded="true" aria-controls="collapsePages10">
                 <i class="fas fa-fw fa-users"></i>
-                <span>Сотрудники</span></a>
+                <span>Сотрудники</span>
+            </a>
+            <div id="collapsePages10" class="collapse {{ request()->routeIs('employees.index') || request()->routeIs('schedules.index') ? 'show' : '' }}" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item {{ request()->routeIs('employees.index') ? 'active' : '' }}" href="{{route('employees.index')}}">Сотрудники</a>
+                    <a class="collapse-item {{ request()->routeIs('schedules.index') ? 'active' : '' }}" href="{{route('schedules.index')}}">Рабочий график</a>
+                </div>
+            </div>
         </li>
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages1" aria-expanded="true" aria-controls="collapsePages1">

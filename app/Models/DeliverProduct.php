@@ -13,6 +13,7 @@ class DeliverProduct extends Model
         'product_id',
         'deliver_id',
         'count',
-        'price'
+        'price',
+        'establishment_id',
     ];
 }

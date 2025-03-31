@@ -12,6 +12,7 @@ class TechnicalMapProduct extends Model
     protected $fillable = [
         'technical_map_id',
         'product_id',
-        'count'
+        'count',
+        'establishment_id',
     ];
 }

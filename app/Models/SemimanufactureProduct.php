@@ -12,6 +12,7 @@ class SemimanufactureProduct extends Model
     protected $fillable = [
         'semimanufacture_id',
         'product_id',
-        'count'
+        'count',
+        'establishment_id',
     ];
 }

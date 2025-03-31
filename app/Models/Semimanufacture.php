@@ -11,6 +11,7 @@ class Semimanufacture extends Model
 
     protected $fillable = [
         'title',
-        'description'
+        'description',
+        'establishment_id',
     ];
 }

@@ -15,7 +15,8 @@ class Product extends Model
         'unit_id',
         'proteins',
         'fats',
-        'carbohydrates'
+        'carbohydrates',
+        'establishment_id',
     ];
 
     public function unit()
