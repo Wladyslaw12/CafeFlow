@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('document_number');
             $table->enum('status', ['Проведено', 'Не проведено']);
+            $table->foreignId('establishment_id')->constrained('establishments')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }

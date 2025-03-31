@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('deliver_id')->constrained('delivers')->cascadeOnUpdate()->cascadeOnDelete();
             $table->integer('count');
             $table->decimal('price');
+            $table->foreignId('establishment_id')->constrained('establishments')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }

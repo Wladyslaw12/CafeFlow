@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('suppliers_id')->constrained('suppliers')->cascadeOnUpdate()->cascadeOnDelete();
             $table->enum('payment_status', ['Оплачен', 'Не оплачен']);
             $table->string('comment');
+            $table->foreignId('establishment_id')->constrained('establishments')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }

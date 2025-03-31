@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('technical_map_id')->constrained('technical_maps')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('product_id')->constrained('products')->cascadeOnUpdate()->cascadeOnDelete();
             $table->decimal('count');
+            $table->foreignId('establishment_id')->constrained('establishments')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }

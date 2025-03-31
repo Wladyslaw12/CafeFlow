@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('client_id')->constrained('clients')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('table_id')->constrained('tables')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('establishment_id')->constrained('establishments')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->dateTime('reservation_date');
             $table->timestamps();
         });
     }

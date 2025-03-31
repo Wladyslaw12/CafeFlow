@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('proteins');
             $table->integer('fats');
             $table->integer('carbohydrates');
+            $table->foreignId('establishment_id')->constrained('establishments')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }
