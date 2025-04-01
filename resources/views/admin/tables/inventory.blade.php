@@ -1,17 +1,15 @@
-@php use App\Models\Role;@endphp
 @extends('admin.admin-layout')
 @section('styles')
-    <link href="{{asset('admin-assets/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('admin-assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 @endsection
 @section('content')
-    <h1 class="h3 mb-2 text-gray-800">Сотрудники</h1>
+    <h1 class="h3 mb-2 text-gray-800">Инвентаризация продуктов</h1>
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <button class="btn btn-success float-right"
-                    onclick="window.location.href = '{{route('employees.create')}}'">
-                <i class="fas fa-plus"></i>
+            <button class="btn btn-success float-right" onclick="inventoryCheck()">
+                <i class="fas fa-check"></i> Провести инвентаризацию
             </button>
         </div>
         <div class="card-body">
@@ -19,47 +17,32 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Имя</th>
-                        <th>Почта</th>
-                        <th>Должность</th>
-                        <th id="actions">Действия</th>
+                        <th>ID продукта</th>
+                        <th>Название продукта</th>
+                        <th>Ожидаемый остаток</th>
+                        <th>Фактическое количество</th>
+                        <th>Разница</th>
                     </tr>
                     </thead>
                     <tfoot>
                     <tr>
-                        <th>ID</th>
-                        <th>Имя</th>
-                        <th>Почта</th>
-                        <th>Должность</th>
-                        <th id="actions">Действия</th>
+                        <th>ID продукта</th>
+                        <th>Название продукта</th>
+                        <th>Ожидаемый остаток</th>
+                        <th>Фактическое количество</th>
+                        <th>Разница</th>
                     </tr>
                     </tfoot>
                     <tbody>
                     @foreach($data as $item)
-                        <tr id="data-string" data-id="{{$item['id']}}"
-                            ondblclick=" window.location.href = '{{route('employees.show', ['id' => $item['id']])}}'">
-                            <td>{{$item['id']}}</td>
-                            <td>{{$item['name']}}</td>
-                            <td>{{$item['email']}}</td>
-                            <td>{{Role::find($item['role_id'])->title}}</td>
-                            <td id="actions">
-                                <div class="row justify-content-center">
-                                    <div class="col-auto mb-2">
-                                        <button class="btn btn-success btn-block" id="btn-edit"
-                                                data-id="{{$item['id'] }}"
-                                                onclick=" window.location.href = '{{route('employees.edit', ['id' => $item['id']])}}'">
-                                            <i class="fas fa-pen"></i>
-                                        </button>
-                                    </div>
-                                    <div class="col-auto">
-                                        <button class="btn btn-danger btn-block" id="btn-delete"
-                                                data-id="{{$item['id'] }}">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </div>
-                                </div>
+                        <tr data-id="{{ $item['product']['id'] }}">
+                            <td>{{ $item['product']['id'] }}</td>
+                            <td>{{ $item['product']['title'] }}</td>
+                            <td class="expected">{{ $item['count'] }}</td>
+                            <td>
+                                <input type="number" class="form-control actual" value="{{ $item['count'] }}" data-id="{{ $item['product']['id'] }}">
                             </td>
+                            <td class="difference"></td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -70,79 +53,35 @@
 @endsection
 
 @section('scripts')
-    <script src="{{asset('admin-assets/vendor/datatables/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('admin-assets/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
-    <script src="{{asset('admin-assets/js/demo/datatables-demo.js')}}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="{{ asset('admin-assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('admin-assets/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('admin-assets/js/demo/datatables-demo.js') }}"></script>
 
     <script>
-        $(document).on('click', '#print-btn', function () {
-            var printContents = document.getElementById('dataTable');
+        function inventoryCheck() {
+            // Проходим по каждой строке таблицы
+            document.querySelectorAll('tbody tr').forEach(function(row) {
+                // Получаем ожидаемое количество из колонки "expected"
+                const expected = parseInt(row.querySelector('.expected').textContent) || 0;
+                // Получаем введённое фактическое количество
+                const actualInput = row.querySelector('.actual');
+                const actual = parseInt(actualInput.value) || 0;
+                // Определяем ячейку для вывода разницы
+                const differenceCell = row.querySelector('.difference');
+                const diff = actual - expected;
 
-            var elementsToRemove = printContents.querySelectorAll('#actions');
-            elementsToRemove.forEach(element => {
-                element.remove();
+                if (diff === 0) {
+                    differenceCell.textContent = "Сходится";
+                    differenceCell.style.color = "green";
+                } else if (diff > 0) {
+                    differenceCell.textContent = "+" + diff;
+                    differenceCell.style.color = "orange";
+                } else {
+                    differenceCell.textContent = diff;
+                    differenceCell.style.color = "red";
+                }
             });
-
-            var originalContents = document.body.innerHTML;
-
-            document.body.innerHTML = printContents.outerHTML;
-
-            window.print();
-
-            document.body.innerHTML = originalContents;
-
-            window.location.reload();
-        });
-
-        document.getElementById('export-btn').addEventListener('click', function () {
-            const table = document.getElementById('dataTable');
-
-            // Клонируем таблицу, чтобы удалить лишние элементы
-            const clonedTable = table.cloneNode(true);
-
-            // Удаляем <tfoot>
-            const tfoot = clonedTable.querySelector('tfoot');
-            if (tfoot) tfoot.remove();
-
-            // Создаём новую книгу и лист
-            const wb = XLSX.utils.book_new();
-            const ws = XLSX.utils.table_to_sheet(clonedTable);
-
-            // Удаляем колонку "Actions"
-            const actionColumn = Object.keys(ws).find(key => ws[key].v === 'Actions');
-            if (actionColumn) {
-                delete ws[actionColumn];
-            }
-
-            XLSX.utils.book_append_sheet(wb, ws, 'Data');
-            XLSX.writeFile(wb, 'export.xlsx');
-        });
-
-
-        const urls = "{{ url(request()->getPathInfo()) }}"
-        const token = $('meta[name="csrf-token"]').attr('content');
-
-        //delete func
-        $(document).on('click', '#btn-delete', function () {
-            let id = $(this).data('id'); // Получить ID сущности
-
-            if (confirm("Подтвердите удаление")) {
-                $.ajax({
-                    url: urls + `/${id}`, // URL маршрута
-                    type: 'DELETE', // Метод запроса
-                    data: {
-                        "_token": token // CSRF-токен
-                    },
-                    success: function (response) {
-                        alert(response.success); // Уведомление об успешном удалении
-                        location.reload(); // Обновление страницы
-                    },
-                    error: function (error) {
-                        alert('Error deleting entity.'); // Обработка ошибок
-                    }
-                });
-            }
-        });
+            alert('Инвентаризация проведена.');
+        }
     </script>
 @endsection
