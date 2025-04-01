@@ -76,50 +76,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
     <script>
-        $(document).on('click', '#print-btn', function () {
-            var printContents = document.getElementById('dataTable');
-
-            var elementsToRemove = printContents.querySelectorAll('#actions');
-            elementsToRemove.forEach(element => {
-                element.remove();
-            });
-
-            var originalContents = document.body.innerHTML;
-
-            document.body.innerHTML = printContents.outerHTML;
-
-            window.print();
-
-            document.body.innerHTML = originalContents;
-
-            window.location.reload();
-        });
-
-        document.getElementById('export-btn').addEventListener('click', function () {
-            const table = document.getElementById('dataTable');
-
-            // Клонируем таблицу, чтобы удалить лишние элементы
-            const clonedTable = table.cloneNode(true);
-
-            // Удаляем <tfoot>
-            const tfoot = clonedTable.querySelector('tfoot');
-            if (tfoot) tfoot.remove();
-
-            // Создаём новую книгу и лист
-            const wb = XLSX.utils.book_new();
-            const ws = XLSX.utils.table_to_sheet(clonedTable);
-
-            // Удаляем колонку "Actions"
-            const actionColumn = Object.keys(ws).find(key => ws[key].v === 'Actions');
-            if (actionColumn) {
-                delete ws[actionColumn];
-            }
-
-            XLSX.utils.book_append_sheet(wb, ws, 'Data');
-            XLSX.writeFile(wb, 'export.xlsx');
-        });
-
-
         const urls = "{{ url(request()->getPathInfo()) }}"
         const token = $('meta[name="csrf-token"]').attr('content');
 
