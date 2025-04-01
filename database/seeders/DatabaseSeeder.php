@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Day;
+use App\Models\Establishment;
+use App\Models\Role;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -13,11 +16,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        Role::factory()->create();
+
+        Establishment::factory()->create();
 
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'User',
+            'email' => 'admin@admin',
         ]);
+
+        $days = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
+
+        for($i=1; $i<=7; $i++)
+        {
+            Day::factory()->create([
+               'title' => $days[$i-1]
+            ]);
+        }
     }
 }

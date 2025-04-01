@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Role;
+use App\Models\Day;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class RoleFactory extends Factory
+class DayFactory extends Factory
 {
-    protected $model = Role::class;
+    protected $model = Day::class;
 
     public function definition(): array
     {
         return [
-            'title' => 'role ' . fake()->title(),
+
         ];
     }
 }

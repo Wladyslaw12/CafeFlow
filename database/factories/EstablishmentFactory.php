@@ -12,7 +12,7 @@ class EstablishmentFactory extends Factory
     public function definition(): array
     {
         return [
-
+            'title' => 'establishment ' . fake()->title(),
         ];
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RemainController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SemimanufactureController;
 use App\Http\Controllers\SuplierController;
 use App\Http\Controllers\TechMapController;
@@ -129,7 +130,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{id}', 'destroy')->name('reservations.destroy');
     });
 
-    Route::prefix('schedules')->controller(ReservationController::class)->group(function () {
+    Route::prefix('schedules')->controller(ScheduleController::class)->group(function () {
         Route::get('/create', 'create')->name('schedules.create');
         Route::post('/', 'store')->name('schedules.store');
         Route::get('/','index')->name('schedules.index');
