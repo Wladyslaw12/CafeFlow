@@ -20,6 +20,8 @@
                     <tr>
                         <th>ID</th>
                         <th>Номер документа</th>
+                        <th>Дата и время</th>
+                        <th>Сумма</th>
                         <th>Статус</th>
                         <th id="actions">Действия</th>
                     </tr>
@@ -38,6 +40,8 @@
                             ondblclick=" window.location.href = '{{route('tech-maps.show', ['id' => $item['id']])}}'">
                             <td>{{$item['id']}}</td>
                             <td>{{$item['document_number']}}</td>
+                            <td>{{$item['created_at']}}</td>
+                            <td>{{0}}</td>
                             <td>{{$item['status']}}</td>
                             <td id="actions">
                                 <div class="row justify-content-center">

@@ -1,3 +1,4 @@
+@php use App\Models\Unit;@endphp
 @extends('admin.admin-layout')
 @section('styles')
     <link href="{{asset('admin-assets/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
@@ -21,6 +22,8 @@
                         <th>ID</th>
                         <th>Название</th>
                         <th>Описание</th>
+                        <th>Единица измерения</th>
+                        <th>Себестоимость</th>
                         <th id="actions">Действия</th>
                     </tr>
                     </thead>
@@ -29,6 +32,8 @@
                         <th>ID</th>
                         <th>Название</th>
                         <th>Описание</th>
+                        <th>Единица измерения</th>
+                        <th>Себестоимость</th>
                         <th id="actions">Действия</th>
                     </tr>
                     </tfoot>
@@ -39,6 +44,8 @@
                             <td>{{$item['id']}}</td>
                             <td>{{$item['title']}}</td>
                             <td>{{$item['description']}}</td>
+                            <td>{{Unit::find($item['unit_id'])->title}}</td>
+                            <td>{{$item['price']}}</td>
                             <td id="actions">
                                 <div class="row justify-content-center">
                                     <div class="col-auto mb-2">

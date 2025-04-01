@@ -21,7 +21,9 @@
                     <tr>
                         <th>ID</th>
                         <th>Номер документа</th>
+                        <th>Дата и время</th>
                         <th>Поставщик</th>
+                        <th>Сумма</th>
                         <th>Статус оплаты</th>
                         <th>Комментарий</th>
                         <th id="actions">Действия</th>
@@ -31,7 +33,9 @@
                     <tr>
                         <th>ID</th>
                         <th>Номер документа</th>
+                        <th>Дата и время</th>
                         <th>Поставщик</th>
+                        <th>Сумма</th>
                         <th>Статус оплаты</th>
                         <th>Комментарий</th>
                         <th id="actions">Действия</th>
@@ -43,7 +47,9 @@
                             ondblclick=" window.location.href = '{{route('delivers.show', ['id' => $item['id']])}}'">
                             <td>{{$item['id']}}</td>
                             <td>{{$item['document_number']}}</td>
+                            <td>{{$item['created_at']}}</td>
                             <td>{{Supplier::find($item['suppliers_id'])->title}}</td>
+                            <td>{{0}}</td>
                             <td>{{$item['payment_status']}}</td>
                             <td>{{$item['comment']}}</td>
                             <td id="actions">
