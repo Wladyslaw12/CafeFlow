@@ -45,7 +45,7 @@
                             <td>{{$item['title']}}</td>
                             <td>{{$item['description']}}</td>
                             <td>{{Unit::find($item['unit_id'])->title}}</td>
-                            <td>{{$item['price']}}</td>
+                            <td>{{$item['price'] . ' р.'}}</td>
                             <td id="actions">
                                 <div class="row justify-content-center">
                                     <div class="col-auto mb-2">

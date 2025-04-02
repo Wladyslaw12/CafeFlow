@@ -41,7 +41,7 @@
                             <td>{{$item['id']}}</td>
                             <td>{{$item['name']}}</td>
                             <td>{{$item['phone']}}</td>
-                            <td>{{$item['card_number']}}</td>
+                            <td>{{'№' . $item['card_number']}}</td>
                             <td id="actions">
                                 <div class="row justify-content-center">
                                     <div class="col-auto mb-2">

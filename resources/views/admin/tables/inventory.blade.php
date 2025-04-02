@@ -1,3 +1,4 @@
+@php use App\Models\Unit;@endphp
 @extends('admin.admin-layout')
 @section('styles')
     <link href="{{ asset('admin-assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
@@ -38,7 +39,7 @@
                         <tr data-id="{{ $item['product']['id'] }}">
                             <td>{{ $item['product']['id'] }}</td>
                             <td>{{ $item['product']['title'] }}</td>
-                            <td class="expected">{{ $item['count'] }}</td>
+                            <td class="expected">{{ $item['count'] . ' ' . Unit::find($item['product']['unit_id'])->title }}</td>
                             <td>
                                 <input type="number" class="form-control actual" value="{{ $item['count'] }}" data-id="{{ $item['product']['id'] }}">
                             </td>
@@ -61,23 +62,29 @@
         function inventoryCheck() {
             // Проходим по каждой строке таблицы
             document.querySelectorAll('tbody tr').forEach(function(row) {
-                // Получаем ожидаемое количество из колонки "expected"
-                const expected = parseInt(row.querySelector('.expected').textContent) || 0;
+                // Извлекаем текст ожидаемого остатка и разбиваем по пробелу, чтобы получить только число
+                const expectedText = row.querySelector('.expected').textContent.trim();
+                const expectedValue = parseFloat(expectedText.split(' ')[0]) || 0;
+
                 // Получаем введённое фактическое количество
                 const actualInput = row.querySelector('.actual');
-                const actual = parseInt(actualInput.value) || 0;
-                // Определяем ячейку для вывода разницы
+                const actualValue = parseFloat(actualInput.value) || 0;
+
+                // Вычисляем разницу
+                const diff = actualValue - expectedValue;
                 const differenceCell = row.querySelector('.difference');
-                const diff = actual - expected;
+
+                // Округляем разницу до 2-х знаков после запятой для удобства отображения
+                const diffFormatted = diff.toFixed(2);
 
                 if (diff === 0) {
                     differenceCell.textContent = "Сходится";
                     differenceCell.style.color = "green";
                 } else if (diff > 0) {
-                    differenceCell.textContent = "+" + diff;
+                    differenceCell.textContent = "+" + diffFormatted;
                     differenceCell.style.color = "orange";
                 } else {
-                    differenceCell.textContent = diff;
+                    differenceCell.textContent = diffFormatted;
                     differenceCell.style.color = "red";
                 }
             });

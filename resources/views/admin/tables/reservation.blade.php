@@ -42,7 +42,7 @@
                             <td>{{$item['id']}}</td>
                             <td>{{Client::find($item['client_id'])->name}}</td>
                             <td>{{Table::find($item['table_id'])->title}}</td>
-                            <td>Надо добавить дату бронировнаия</td>
+                            <td>{{\Carbon\Carbon::parse($item['reservation_date'])->format('d.m.Y H:i')}}</td>
                             <td id="actions">
                                 <div class="row justify-content-center">
                                     <div class="col-auto mb-2">

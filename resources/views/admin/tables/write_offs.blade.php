@@ -1,3 +1,4 @@
+@php use App\Actions\WriteOffAction;@endphp
 @extends('admin.admin-layout')
 @section('styles')
     <link href="{{asset('admin-assets/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
@@ -42,8 +43,8 @@
                             ondblclick=" window.location.href = '{{route('tech-maps.show', ['id' => $item['id']])}}'">
                             <td>{{$item['id']}}</td>
                             <td>{{$item['document_number']}}</td>
-                            <td>{{$item['created_at']}}</td>
-                            <td>{{0}}</td>
+                            <td>{{\Carbon\Carbon::parse($item['created_at'])->format('d.m.Y H:i')}}</td>
+                            <td>{{WriteOffAction::run($item['id']) . ' р.'}}</td>
                             <td>{{$item['status']}}</td>
                             <td id="actions">
                                 <div class="row justify-content-center">

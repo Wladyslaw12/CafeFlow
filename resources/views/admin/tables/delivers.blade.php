@@ -1,4 +1,4 @@
-@php use App\Models\Supplier;@endphp
+@php use App\Models\Supplier; use App\Actions\DeliverAction;@endphp
 @extends('admin.admin-layout')
 @section('styles')
     <link href="{{asset('admin-assets/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
@@ -46,10 +46,10 @@
                         <tr id="data-string" data-id="{{$item['id']}}"
                             ondblclick=" window.location.href = '{{route('delivers.show', ['id' => $item['id']])}}'">
                             <td>{{$item['id']}}</td>
-                            <td>{{$item['document_number']}}</td>
-                            <td>{{$item['created_at']}}</td>
+                            <td>{{'№'.$item['document_number']}}</td>
+                            <td>{{\Carbon\Carbon::parse($item['created_at'])->format('d.m.Y H:i')}}</td>
                             <td>{{Supplier::find($item['suppliers_id'])->title}}</td>
-                            <td>{{0}}</td>
+                            <td>{{DeliverAction::run($item['id'])['sum'] . ' р.'}}</td>
                             <td>{{$item['payment_status']}}</td>
                             <td>{{$item['comment']}}</td>
                             <td id="actions">

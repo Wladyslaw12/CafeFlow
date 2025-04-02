@@ -49,9 +49,9 @@
                             <td>{{$item['title']}}</td>
                             <td>{{$item['description']}}</td>
                             <td>{{Unit::find($item['unit_id'])->title}}</td>
-                            <td>{{$item['proteins']}}</td>
-                            <td>{{$item['fats']}}</td>
-                            <td>{{$item['carbohydrates']}}</td>
+                            <td>{{$item['proteins'] . ' г.'}}</td>
+                            <td>{{$item['fats'] . ' г.'}}</td>
+                            <td>{{$item['carbohydrates'] . ' г.'}}</td>
                             <td id="actions">
                                 <div class="row justify-content-center">
                                     <div class="col-auto mb-2">
