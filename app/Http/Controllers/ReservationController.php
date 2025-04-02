@@ -10,7 +10,7 @@ class ReservationController extends Controller
 {
     public function index()
     {
-        $data = Reservation::get();
+        $data = Reservation::query()->where('establishment_id', '=', auth()->user()->establishment_id)->get();
 
         return view('admin.tables.reservation',
             compact('data'));
@@ -37,7 +37,8 @@ class ReservationController extends Controller
      */
     public function show(string $id)
     {
-        dd('show');
+        $item = Reservation::find($id);
+        return view('admin.details.reservation', compact('item'));
     }
 
     /**

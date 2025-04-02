@@ -10,7 +10,7 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <button class="btn btn-success float-right"
-                    onclick="window.location.href = '{{route('tech-maps.create')}}'">
+                    onclick="window.location.href = '{{route('write_offs.create')}}'">
                 <i class="fas fa-plus"></i>
             </button>
         </div>
@@ -40,7 +40,7 @@
                     <tbody>
                     @foreach($data as $item)
                         <tr id="data-string" data-id="{{$item['id']}}"
-                            ondblclick=" window.location.href = '{{route('tech-maps.show', ['id' => $item['id']])}}'">
+                            ondblclick=" window.location.href = '{{route('write_offs.show', ['id' => $item['id']])}}'">
                             <td>{{$item['id']}}</td>
                             <td>{{$item['document_number']}}</td>
                             <td>{{\Carbon\Carbon::parse($item['created_at'])->format('d.m.Y H:i')}}</td>
@@ -51,7 +51,7 @@
                                     <div class="col-auto mb-2">
                                         <button class="btn btn-success btn-block" id="btn-edit"
                                                 data-id="{{$item['id'] }}"
-                                                onclick=" window.location.href = '{{route('tech-maps.edit', ['id' => $item['id']])}}'">
+                                                onclick=" window.location.href = '{{route('write_offs.edit', ['id' => $item['id']])}}'">
                                             <i class="fas fa-pen"></i>
                                         </button>
                                     </div>

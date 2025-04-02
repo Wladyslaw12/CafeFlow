@@ -92,9 +92,9 @@
                 <i class="fas fa-fw fa-handshake"></i>
                 <span>Группа клиентов</span>
             </a>
-            <div id="collapsePages3" class="collapse {{request()->routeIs('сlients.index') || request()->routeIs('reservations.index') ? 'show' : '' }}" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div id="collapsePages3" class="collapse {{request()->routeIs('clients.index') || request()->routeIs('reservations.index') ? 'show' : '' }}" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item {{ request()->routeIs('сlients.index') ? 'active' : '' }}" href="{{route('сlients.index')}}">Клиенты</a>
+                    <a class="collapse-item {{ request()->routeIs('clients.index') ? 'active' : '' }}" href="{{route('clients.index')}}">Клиенты</a>
                     <a class="collapse-item {{ request()->routeIs('reservations.index') ? 'active' : '' }}" href="{{route('reservations.index')}}">Бронирование столов</a>
                 </div>
             </div>

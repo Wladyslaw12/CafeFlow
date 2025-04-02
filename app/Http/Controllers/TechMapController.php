@@ -10,7 +10,7 @@ class TechMapController extends Controller
 {
     public function index()
     {
-        $data = TechnicalMap::get();
+        $data = TechnicalMap::query()->where('establishment_id', '=', auth()->user()->establishment_id)->get();
 
         return view('admin.tables.tech-maps',
             compact('data'));
@@ -37,7 +37,8 @@ class TechMapController extends Controller
      */
     public function show(string $id)
     {
-        dd('show');
+        $item = TechnicalMap::find($id);
+        return view('admin.details.tech-maps', compact('item'));
     }
 
     /**

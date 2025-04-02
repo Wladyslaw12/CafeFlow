@@ -37,7 +37,7 @@
                     <tbody>
                     @foreach($data as $item)
                         <tr id="data-string" data-id="{{$item['id']}}"
-                            ondblclick=" window.location.href = '{{route('tech-maps.show', ['id' => $item['id']])}}'">
+                            ondblclick=" window.location.href = '{{route('clients.show', ['id' => $item['id']])}}'">
                             <td>{{$item['id']}}</td>
                             <td>{{$item['name']}}</td>
                             <td>{{$item['phone']}}</td>

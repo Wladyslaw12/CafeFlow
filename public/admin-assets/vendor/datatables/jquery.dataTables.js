@@ -402,7 +402,7 @@
 		 *
 		 *  @example
 		 *    $(document).ready(function() {
-		 *      // This example is fairly pointless in reality, but shows how fnDestroy can be used
+		 *      // This example is fairly pointless in reality, but details how fnDestroy can be used
 		 *      var oTable = $('#example').dataTable();
 		 *      oTable.fnDestroy();
 		 *    } );
@@ -10241,7 +10241,7 @@
 	
 		/**
 		 * This parameter allows you to readily specify the entries in the length drop
-		 * down menu that DataTables shows when pagination is enabled. It can be
+		 * down menu that DataTables details when pagination is enabled. It can be
 		 * either a 1D array of options which will be used for both the displayed
 		 * option and the value, or a 2D array which will use the array in the first
 		 * position as the value, and the array in the second position as the
@@ -10445,7 +10445,7 @@
 	
 	
 		/**
-		 * Enable or disable the table information display. This shows information
+		 * Enable or disable the table information display. This details information
 		 * about the data that is currently visible on the page, including information
 		 * about filtered data if that action is being performed.
 		 *  @type boolean
@@ -14047,7 +14047,7 @@
 		 *  @default []
 		 *
 		 *  @example
-		 *    // The following example shows custom search being applied to the
+		 *    // The following example details custom search being applied to the
 		 *    // fourth column (i.e. the data[3] index) based on two input values
 		 *    // from the end-user, matching the data in a certain range.
 		 *    $.fn.dataTable.ext.search.push(

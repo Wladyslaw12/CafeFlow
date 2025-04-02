@@ -91,33 +91,21 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('remains')->controller(RemainController::class)->group(function () {
-        Route::get('/create', 'create')->name('remains.create');
-        Route::post('/', 'store')->name('remains.store');
         Route::get('/','index')->name('remains.index');
-        Route::get('/{id}', 'show')->name('remains.show');
-        Route::get('/{id}/edit', 'edit')->name('remains.edit');
-        Route::patch('/{id}', 'update')->name('remains.update');
-        Route::delete('/{id}', 'destroy')->name('remains.destroy');
     });
 
     Route::prefix('inventory')->controller(InventoryController::class)->group(function () {
-        Route::get('/create', 'create')->name('inventory.create');
-        Route::post('/', 'store')->name('inventory.store');
         Route::get('/','index')->name('inventory.index');
-        Route::get('/{id}', 'show')->name('inventory.show');
-        Route::get('/{id}/edit', 'edit')->name('inventory.edit');
-        Route::patch('/{id}', 'update')->name('inventory.update');
-        Route::delete('/{id}', 'destroy')->name('inventory.destroy');
     });
 
     Route::prefix('сlients')->controller(ClientController::class)->group(function () {
-        Route::get('/create', 'create')->name('сlients.create');
-        Route::post('/', 'store')->name('сlients.store');
-        Route::get('/','index')->name('сlients.index');
-        Route::get('/{id}', 'show')->name('сlients.show');
-        Route::get('/{id}/edit', 'edit')->name('сlients.edit');
-        Route::patch('/{id}', 'update')->name('сlients.update');
-        Route::delete('/{id}', 'destroy')->name('сlients.destroy');
+        Route::get('/create', 'create')->name('clients.create');
+        Route::post('/', 'store')->name('clients.store');
+        Route::get('/','index')->name('clients.index');
+        Route::get('/{id}', 'show')->name('clients.show');
+        Route::get('/{id}/edit', 'edit')->name('clients.edit');
+        Route::patch('/{id}', 'update')->name('clients.update');
+        Route::delete('/{id}', 'destroy')->name('clients.destroy');
     });
 
     Route::prefix('reservations')->controller(ReservationController::class)->group(function () {
@@ -134,7 +122,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/create', 'create')->name('schedules.create');
         Route::post('/', 'store')->name('schedules.store');
         Route::get('/','index')->name('schedules.index');
-        Route::get('/{id}', 'show')->name('schedules.show');
         Route::get('/{id}/edit', 'edit')->name('schedules.edit');
         Route::patch('/{id}', 'update')->name('schedules.update');
         Route::delete('/{id}', 'destroy')->name('schedules.destroy');

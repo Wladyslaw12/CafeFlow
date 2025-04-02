@@ -9,7 +9,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $data = User::get();
+        $data = User::query()->where('establishment_id', '=', auth()->user()->establishment_id)->get();
 
         return view('admin.tables.employees',
             compact('data'));
@@ -36,7 +36,9 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        dd('show');
+        $item = User::find($id);
+
+        return view('admin.details.employees', compact('item'));
     }
 
     /**

@@ -10,7 +10,7 @@ class ClientController extends Controller
 {
     public function index()
     {
-        $data = Client::get();
+        $data = Client::query()->where('establishment_id', '=', auth()->user()->establishment_id)->get();
 
         return view('admin.tables.clients',
             compact('data'));
@@ -37,7 +37,8 @@ class ClientController extends Controller
      */
     public function show(string $id)
     {
-        dd('show');
+        $item = Client::find($id);
+        return view('admin.details.clients', compact('item'));
     }
 
     /**

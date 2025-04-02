@@ -10,7 +10,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $data = Product::get();
+        $data = Product::query()->where('establishment_id', '=', auth()->user()->establishment_id)->get();
 
         return view('admin.tables.products',
             compact('data'));
@@ -37,7 +37,8 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        dd('show');
+        $item = Product::find($id);
+        return view('admin.details.products', compact('item'));
     }
 
     /**

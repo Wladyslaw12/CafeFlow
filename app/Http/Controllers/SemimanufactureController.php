@@ -10,7 +10,7 @@ class SemimanufactureController extends Controller
 {
     public function index()
     {
-        $data = Semimanufacture::get();
+        $data = Semimanufacture::query()->where('establishment_id', '=', auth()->user()->establishment_id)->get();
 
         return view('admin.tables.semimanufactures',
             compact('data'));
@@ -37,7 +37,8 @@ class SemimanufactureController extends Controller
      */
     public function show(string $id)
     {
-        dd('show');
+        $item = Semimanufacture::find($id);
+        return view('admin.details.semimanufactures', compact('item'));
     }
 
     /**

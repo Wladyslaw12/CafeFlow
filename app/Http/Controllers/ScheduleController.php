@@ -9,7 +9,7 @@ class ScheduleController extends Controller
 {
     public function index()
     {
-        $data = User::get();
+        $data = User::query()->where('establishment_id', '=', auth()->user()->establishment_id)->get();
 
         return view('admin.tables.schedule',
             compact('data'));

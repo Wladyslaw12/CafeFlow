@@ -10,7 +10,7 @@ class DeliverController extends Controller
 {
     public function index()
     {
-        $data = Deliver::get();
+        $data = Deliver::query()->where('establishment_id', '=', auth()->user()->establishment_id)->get();
 
         return view('admin.tables.delivers',
             compact('data'));
@@ -37,7 +37,8 @@ class DeliverController extends Controller
      */
     public function show(string $id)
     {
-        dd('show');
+        $item = Deliver::find($id);
+        return view('admin.details.delivers', compact('item'));
     }
 
     /**

@@ -14,4 +14,14 @@ class Reservation extends Model
         'table_id',
         'establishment_id',
     ];
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
+    }
+
+    public function table()
+    {
+        return $this->belongsTo(Table::class);
+    }
 }

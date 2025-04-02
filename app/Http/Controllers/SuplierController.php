@@ -9,7 +9,7 @@ class SuplierController extends Controller
 {
     public function index()
     {
-        $data = Supplier::get();
+        $data = Supplier::query()->where('establishment_id', '=', auth()->user()->establishment_id)->get();
 
         return view('admin.tables.suppliers',
             compact('data'));
@@ -36,7 +36,8 @@ class SuplierController extends Controller
      */
     public function show(string $id)
     {
-        dd('show');
+        $item = Supplier::find($id);
+        return view('admin.details.suppliers', compact('item'));
     }
 
     /**

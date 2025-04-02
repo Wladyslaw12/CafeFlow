@@ -10,7 +10,7 @@ class WriteOffController extends Controller
 {
     public function index()
     {
-        $data = WriteOff::get();
+        $data = WriteOff::query()->where('establishment_id', '=', auth()->user()->establishment_id)->get();
 
         return view('admin.tables.write_offs',
             compact('data'));
@@ -37,7 +37,8 @@ class WriteOffController extends Controller
      */
     public function show(string $id)
     {
-        dd('show');
+        $item = WriteOff::find($id);
+        return view('admin.details.write_offs', compact('item'));
     }
 
     /**
