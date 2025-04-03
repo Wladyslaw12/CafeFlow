@@ -10,7 +10,12 @@ class Establishment extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title'
+        'title',
+        'address',
+        'phone',
+        'form_of_business_activity',
+        'owner_name',
+        'founding_date'
     ];
     
     public function users()

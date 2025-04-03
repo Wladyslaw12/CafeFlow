@@ -62,6 +62,6 @@ class WriteOffController extends Controller
      */
     public function destroy(string $id)
     {
-        dd('destroy');
+        WriteOff::destroy($id);
     }
 }

@@ -26,7 +26,7 @@
 
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('start')}}">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('establishment.show', ['id' => auth()->user()->establishment_id])}}">
             <div class="sidebar-brand-icon">
                 <img class="img-profile rounded-circle"
                      src="{{asset('storage/images/CafeFlow.svg')}}"

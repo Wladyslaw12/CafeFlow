@@ -62,6 +62,6 @@ class SemimanufactureController extends Controller
      */
     public function destroy(string $id)
     {
-        dd('destroy');
+        Semimanufacture::destroy($id);
     }
 }

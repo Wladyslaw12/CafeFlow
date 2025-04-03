@@ -62,6 +62,6 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        dd('destroy');
+        Product::destroy($id);
     }
 }

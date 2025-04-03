@@ -103,7 +103,7 @@
                         "_token": token // CSRF-токен
                     },
                     success: function (response) {
-                        alert(response.success); // Уведомление об успешном удалении
+                        alert('Удаление прошло успешно');
                         window.location.href = '{{route('write_offs.index')}}';
                     },
                     error: function (error) {

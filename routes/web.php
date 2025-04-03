@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DeliverController;
+use App\Http\Controllers\EstablishmentController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RemainController;
@@ -16,9 +17,16 @@ use App\Http\Controllers\WriteOffController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', function () {
-        return view('admin.start');
-    })->name('start');
+    Route::view('/', 'admin.start')->name('start');
+
+    Route::prefix('establishment')->controller(EstablishmentController::class)->group(function () {
+        Route::get('/create', 'create')->name('establishment.create');
+        Route::post('/', 'store')->name('establishment.store');
+        Route::get('/{id}', 'show')->name('establishment.show');
+        Route::get('/{id}/edit', 'edit')->name('establishment.edit');
+        Route::patch('/{id}', 'update')->name('establishment.update');
+        Route::delete('/{id}', 'destroy')->name('establishment.destroy');
+    });
 
     Route::prefix('employees')->controller(UserController::class)->group(function () {
         Route::get('/create', 'create')->name('employees.create');
@@ -130,10 +138,14 @@ Route::middleware('auth')->group(function () {
 
 
 
-Route::view('/login', 'login')->name('login');
 
 Route::controller(AuthController::class)->group(function () {
+    Route::view('/login', 'login')->name('login');
     Route::post('/login', 'login')->name('loginAction');
+    Route::view('/register', 'register')->name('register');
+    Route::post('/register', 'register')->name('registerAction');
+    Route::post('/register-dir', 'registerDir')->name('registerDirAction');
+    Route::view('/register-dir', 'register-dir')->name('registerDir');
     Route::get('/logout', 'logout')->middleware('auth')->name('logoutAction');
 });
 

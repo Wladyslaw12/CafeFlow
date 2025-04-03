@@ -1,3 +1,4 @@
+@php use App\Models\Unit;@endphp
 @extends('admin.admin-layout')
 @section('styles')
     <link href="{{asset('admin-assets/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
@@ -15,7 +16,7 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">Название : {{ $item['title'] }}</li>
                             <li class="list-group-item">Описание : {{ $item['description'] }}</li>
-                            <li class="list-group-item">Единица измерения : {{ 'Добавить единицу измерения' }}</li>
+                            <li class="list-group-item">Единица измерения : {{Unit::find($item['unit_id'])->title}}</li>
                         </ul>
                         <div class="card mb-4">
                             <div class="card-body p-0">
@@ -104,7 +105,7 @@
                         "_token": token // CSRF-токен
                     },
                     success: function (response) {
-                        alert(response.success); // Уведомление об успешном удалении
+                        alert('Удаление прошло успешно');
                         window.location.href = '{{route('tech-maps.index')}}';
                     },
                     error: function (error) {

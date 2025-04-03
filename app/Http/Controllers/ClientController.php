@@ -62,6 +62,6 @@ class ClientController extends Controller
      */
     public function destroy(string $id)
     {
-        dd('destroy');
+        Client::destroy($id);
     }
 }

@@ -2,20 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TechnicalMap;
-use App\Models\User;
+use App\Models\Establishment;
 use Illuminate\Http\Request;
 
-class TechMapController extends Controller
+class EstablishmentController extends Controller
 {
-    public function index()
-    {
-        $data = TechnicalMap::query()->where('establishment_id', '=', auth()->user()->establishment_id)->get();
-
-        return view('admin.tables.tech-maps',
-            compact('data'));
-    }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -37,8 +28,9 @@ class TechMapController extends Controller
      */
     public function show(string $id)
     {
-        $item = TechnicalMap::find($id);
-        return view('admin.details.tech-maps', compact('item'));
+        $item = Establishment::find($id);
+
+        return view('admin.details.establishment', compact('item'));
     }
 
     /**
@@ -62,6 +54,6 @@ class TechMapController extends Controller
      */
     public function destroy(string $id)
     {
-        TechnicalMap::destroy($id);
+        Establishment::destroy($id);
     }
 }

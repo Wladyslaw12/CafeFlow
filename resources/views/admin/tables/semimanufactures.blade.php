@@ -44,7 +44,7 @@
                             <td>{{$item['id']}}</td>
                             <td>{{$item['title']}}</td>
                             <td>{{$item['description']}}</td>
-                            <td>{{'Добавить единицу измерения'}}</td>
+                            <td>{{Unit::find($item['unit_id'])->title}}</td>
                             <td>{{\App\Actions\SemimanufactureSumAction::run($item['id']) . ' р.'}}</td>
                             <td id="actions">
                                 <div class="row justify-content-center">
@@ -94,7 +94,7 @@
                         "_token": token // CSRF-токен
                     },
                     success: function (response) {
-                        alert(response.success); // Уведомление об успешном удалении
+                        alert('Удаление прошло успешно');
                         location.reload(); // Обновление страницы
                     },
                     error: function (error) {

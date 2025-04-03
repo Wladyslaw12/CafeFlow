@@ -43,23 +43,25 @@
                             <td>{{$item['name']}}</td>
                             <td>{{$item['email']}}</td>
                             <td>{{Role::find($item['role_id'])->title}}</td>
-                            <td id="actions">
-                                <div class="row justify-content-center">
-                                    <div class="col-auto mb-2">
-                                        <button class="btn btn-success btn-block" id="btn-edit"
-                                                data-id="{{$item['id'] }}"
-                                                onclick=" window.location.href = '{{route('employees.edit', ['id' => $item['id']])}}'">
-                                            <i class="fas fa-pen"></i>
-                                        </button>
+                                <td id="actions">
+                                    <div class="row justify-content-center">
+                                        <div class="col-auto mb-2">
+                                            <button class="btn btn-success btn-block" id="btn-edit"
+                                                    data-id="{{$item['id'] }}"
+                                                    onclick=" window.location.href = '{{route('employees.edit', ['id' => $item['id']])}}'">
+                                                <i class="fas fa-pen"></i>
+                                            </button>
+                                        </div>
+                                        @if($item['id'] != auth()->user()->id)
+                                            <div class="col-auto">
+                                                <button class="btn btn-danger btn-block" id="btn-delete"
+                                                        data-id="{{$item['id'] }}">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        @endif
                                     </div>
-                                    <div class="col-auto">
-                                        <button class="btn btn-danger btn-block" id="btn-delete"
-                                                data-id="{{$item['id'] }}">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
+                                </td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -91,7 +93,7 @@
                         "_token": token // CSRF-токен
                     },
                     success: function (response) {
-                        alert(response.success); // Уведомление об успешном удалении
+                        alert('Удаление прошло успешно');
                         location.reload(); // Обновление страницы
                     },
                     error: function (error) {

@@ -61,7 +61,7 @@
                         "_token": token // CSRF-токен
                     },
                     success: function (response) {
-                        alert(response.success); // Уведомление об успешном удалении
+                        alert('Удаление прошло успешно');
                         window.location.href = '{{route('clients.index')}}';
                     },
                     error: function (error) {

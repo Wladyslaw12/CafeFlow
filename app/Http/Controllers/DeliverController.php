@@ -63,6 +63,6 @@ class DeliverController extends Controller
      */
     public function destroy(string $id)
     {
-        dd('destroy');
+        Deliver::destroy($id);
     }
 }
