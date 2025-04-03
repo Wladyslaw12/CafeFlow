@@ -15,4 +15,9 @@ class WriteOffProduct extends Model
         'count',
         'establishment_id',
     ];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

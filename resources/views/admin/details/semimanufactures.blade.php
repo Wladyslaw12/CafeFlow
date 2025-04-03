@@ -13,7 +13,53 @@
                     </div>
                     <div class="card-body">
                         <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Название : {{ $item['title'] }}</li>
+                            <li class="list-group-item">Описание : {{ $item['description'] }}</li>
+                            <li class="list-group-item">Единица измерения : {{ 'Добавить единицу измерения' }}</li>
                         </ul>
+                        <div class="card mb-4">
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    @php
+                                        $semimanufactureProducts = $item->semimanufactureProducts()->get();
+                                        $totalSum = 0;
+                                    @endphp
+                                    <table class="table table-bordered mb-0" width="100%" cellspacing="0">
+                                        <thead class="thead-light">
+                                        <tr>
+                                            <th>Название</th>
+                                            <th>Количество</th>
+                                            <th>Себестоимость</th>
+                                            <th>Сумма</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($semimanufactureProducts as $semimanufactureProduct)
+                                            @php
+                                                $price = \App\Actions\SemimanufactureProductAction::run($item['id'],$semimanufactureProduct->product()->first()->id)/$semimanufactureProduct['count'];
+
+                                                $totalSum += ($semimanufactureProduct['count']*$price);
+                                            @endphp
+                                            <tr>
+                                                <td>{{ $semimanufactureProduct->product()->first()->title }}</td>
+                                                <td>{{ $semimanufactureProduct['count'] .' ' . $semimanufactureProduct->product()->first()->unit()->first()->title}}</td>
+                                                <td>{{ $price }} р.</td>
+                                                <td>{{ ceil($semimanufactureProduct['count'] * $price * 100) / 100 }} р.</td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                        <tfoot class="thead-light">
+                                        <tr>
+                                            <th>Итого</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th>{{ $totalSum }} р.</th>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                         <div class="mt-4">
                             <div class="row justify-content-end">
                                 <div class="col-auto mb-2">

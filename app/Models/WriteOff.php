@@ -18,4 +18,9 @@ class WriteOff extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public function writeOffProducts()
+    {
+        return $this->hasMany(WriteOffProduct::class);
+    }
 }

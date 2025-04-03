@@ -38,6 +38,7 @@ class DeliverController extends Controller
     public function show(string $id)
     {
         $item = Deliver::find($id);
+
         return view('admin.details.delivers', compact('item'));
     }
 

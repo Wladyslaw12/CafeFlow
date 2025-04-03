@@ -16,4 +16,9 @@ class Semimanufacture extends Model
         'price',
         'establishment_id',
     ];
+
+    public function semimanufactureProducts()
+    {
+        return $this->hasMany(SemimanufactureProduct::class);
+    }
 }

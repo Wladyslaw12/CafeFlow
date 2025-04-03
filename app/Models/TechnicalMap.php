@@ -16,4 +16,9 @@ class TechnicalMap extends Model
         'price',
         'establishment_id',
     ];
+
+    public function technicalMapProducts()
+    {
+        return $this->hasMany(TechnicalMapProduct::class);
+    }
 }

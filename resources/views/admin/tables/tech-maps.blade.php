@@ -44,8 +44,8 @@
                             <td>{{$item['id']}}</td>
                             <td>{{$item['title']}}</td>
                             <td>{{$item['description']}}</td>
-                            <td>{{Unit::find($item['unit_id'])->title}}</td>
-                            <td>{{$item['price'] . ' р.'}}</td>
+                            <td>Добавить единицу измерения</td>
+                            <td>{{\App\Actions\TechMapSumAction::run($item['id']) . ' р.'}}</td>
                             <td id="actions">
                                 <div class="row justify-content-center">
                                     <div class="col-auto mb-2">

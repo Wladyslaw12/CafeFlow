@@ -16,4 +16,14 @@ class Deliver extends Model
         'comment',
         'establishment_id',
     ];
+
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class, 'suppliers_id');
+    }
+
+    public function deliverProducts()
+    {
+        return $this->hasMany(DeliverProduct::class);
+    }
 }
