@@ -14,6 +14,12 @@ return new class extends Migration
         Schema::create('establishments', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('address');
+            $table->string('phone');
+            $table->enum('form_of_business_activity', ['ИП', 'ОАО', 'ООО']);
+            $table->string('owner_name');
+            $table->date('founding_date');
+
             $table->timestamps();
         });
     }
