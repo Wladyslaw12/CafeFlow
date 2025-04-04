@@ -13,6 +13,7 @@ class Reservation extends Model
         'client_id',
         'table_id',
         'establishment_id',
+        'reservation_date'
     ];
 
     public function client()

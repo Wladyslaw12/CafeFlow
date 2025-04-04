@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SupplierRequest;
+use App\Http\Requests\SupplierUpdateRequest;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 
@@ -20,15 +22,23 @@ class SuplierController extends Controller
      */
     public function create()
     {
-        dd('create');
+        return view('admin.create.suppliers');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(SupplierRequest $request)
     {
-        dd('store');
+        $data = $request->validated();
+
+        $data['establishment_id'] = auth()->user()->establishment_id;
+
+        Supplier::query()->create(
+            $data
+        );
+
+        return to_route('suppliers.index');
     }
 
     /**
@@ -45,15 +55,18 @@ class SuplierController extends Controller
      */
     public function edit(string $id)
     {
-        dd('edit');
+        $item = Supplier::find($id);
+        return view('admin.edit.suppliers', compact('item'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(SupplierUpdateRequest $request, string $id)
     {
-        dd('update');
+        Supplier::find($id)->update($request->validated());
+
+        return to_route('suppliers.index');
     }
 
     /**

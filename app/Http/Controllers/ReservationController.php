@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ReservationRequest;
+use App\Http\Requests\ReservationUpdateRequest;
 use App\Models\Reservation;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ReservationController extends Controller
@@ -21,15 +24,23 @@ class ReservationController extends Controller
      */
     public function create()
     {
-        dd('create');
+       return view('admin.create.reservation');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ReservationRequest $request)
     {
-        dd('store');
+        $data = $request->validated();
+
+        $data['establishment_id'] = auth()->user()->establishment_id;
+
+        Reservation::query()->create(
+            $data
+        );
+
+        return to_route('reservations.index');
     }
 
     /**
@@ -46,15 +57,18 @@ class ReservationController extends Controller
      */
     public function edit(string $id)
     {
-        dd('edit');
+        $item = Reservation::find($id);
+        return view('admin.edit.reservation', compact('item'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ReservationUpdateRequest $request, string $id)
     {
-        dd('update');
+        Reservation::find($id)->update($request->validated());
+
+        return to_route('reservations.index');
     }
 
     /**

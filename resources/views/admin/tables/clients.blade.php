@@ -9,7 +9,7 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <button class="btn btn-success float-right"
-                    onclick="window.location.href = '{{route('tech-maps.create')}}'">
+                    onclick="window.location.href = '{{route('clients.create')}}'">
                 <i class="fas fa-plus"></i>
             </button>
         </div>
@@ -47,7 +47,7 @@
                                     <div class="col-auto mb-2">
                                         <button class="btn btn-success btn-block" id="btn-edit"
                                                 data-id="{{$item['id'] }}"
-                                                onclick=" window.location.href = '{{route('tech-maps.edit', ['id' => $item['id']])}}'">
+                                                onclick=" window.location.href = '{{route('clients.edit', ['id' => $item['id']])}}'">
                                             <i class="fas fa-pen"></i>
                                         </button>
                                     </div>

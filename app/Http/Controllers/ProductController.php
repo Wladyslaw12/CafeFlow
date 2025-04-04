@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRequest;
+use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -21,15 +23,23 @@ class ProductController extends Controller
      */
     public function create()
     {
-        dd('create');
+        return view('admin.create.products');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        dd('store');
+        $data = $request->validated();
+
+        $data['establishment_id'] = auth()->user()->establishment_id;
+
+        Product::query()->create(
+            $data
+        );
+
+        return to_route('products.index');
     }
 
     /**
@@ -46,15 +56,18 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        dd('edit');
+        $item = Product::find($id);
+        return view('admin.edit.products', compact('item'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ProductUpdateRequest $request, string $id)
     {
-        dd('update');
+        Product::find($id)->update($request->validated());
+
+        return to_route('products.index');
     }
 
     /**

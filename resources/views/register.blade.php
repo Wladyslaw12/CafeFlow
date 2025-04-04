@@ -112,9 +112,13 @@
                         <input id="phone"
                                name="phone"
                                type="tel"
+                               pattern="\+375\d{9}"
+                               maxlength="13"
                                class="form-control input-icon"
                                placeholder="Номер телефона"
-                               required>
+                               required
+                               oninvalid="setCustomValidity('Введите номер в формате +375XXXXXXXXX')"
+                        >
                     </div>
 
                     <!-- Форма предпринимательской деятельности -->

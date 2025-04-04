@@ -47,7 +47,7 @@ class RemainAction
                     $sum += $deliverProduct['price']*$deliverProduct['count'];
                 }
 
-                $data[]=['product' => $product, 'count' => $count, 'sum' => $sum, 'lastDeliver' => $deliverProducts->last()->created_at];
+                $data[]=['product' => $product, 'count' => $count, 'sum' => $sum, 'lastDeliver' => $deliverProducts->last()->created_at ?? null];
 
             }
 

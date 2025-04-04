@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EstablishmentUpdateRequest;
 use App\Models\Establishment;
 use Illuminate\Http\Request;
 
@@ -38,15 +39,18 @@ class EstablishmentController extends Controller
      */
     public function edit(string $id)
     {
-        dd('edit');
+        $item = Establishment::find($id);
+        return view('admin.edit.establishment', compact('item'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(EstablishmentUpdateRequest $request, string $id)
     {
-        dd('update');
+        Establishment::find($id)->update($request->validated());
+
+        return to_route('establishment.show', ['id' => $id]);
     }
 
     /**

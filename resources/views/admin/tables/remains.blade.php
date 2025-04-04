@@ -35,7 +35,7 @@
                             <td>{{$item['product']['title']}}</td>
                             <td>{{$item['count'] . ' ' . Unit::find($item['product']['unit_id'])->title}}</td>
                             <td>{{$item['sum'] . ' р.'}}</td>
-                            <td>{{$item['lastDeliver']->format('d.m.Y')}}</td>
+                            <td>@if($item['lastDeliver'] != null) {{$item['lastDeliver']->format('d.m.Y')}} @else - @endif</td>
                         </tr>
                     @endforeach
                     </tbody>

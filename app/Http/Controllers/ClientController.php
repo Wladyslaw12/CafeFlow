@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ClientRequest;
+use App\Http\Requests\ClientUpdateRequest;
 use App\Models\Client;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -21,15 +23,23 @@ class ClientController extends Controller
      */
     public function create()
     {
-        dd('create');
+        return view('admin.create.clients');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ClientRequest $request)
     {
-        dd('store');
+        $data = $request->validated();
+
+        $data['establishment_id'] = auth()->user()->establishment_id;
+
+        Client::query()->create(
+            $data
+        );
+
+        return to_route('clients.index');
     }
 
     /**
@@ -46,15 +56,19 @@ class ClientController extends Controller
      */
     public function edit(string $id)
     {
-        dd('edit');
+        $item = Client::query()->find($id);
+
+        return view('admin.edit.clients', compact('item'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ClientUpdateRequest $request, string $id)
     {
-        dd('update');
+        Client::find($id)->update($request->validated());
+
+        return to_route('clients.index');
     }
 
     /**

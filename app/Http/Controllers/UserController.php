@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EmployeeRequest;
+use App\Http\Requests\EmployeeUpdateRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -20,15 +23,25 @@ class UserController extends Controller
      */
     public function create()
     {
-        dd('create');
+        return view('admin.create.employees');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(EmployeeRequest $request)
     {
-        dd('store');
+        $data = $request->validated();
+
+        $data['password'] = Hash::make($data['password']);
+
+        $data['establishment_id'] = auth()->user()->establishment_id;
+
+        User::query()->create(
+            $data
+        );
+
+        return to_route('employees.index');
     }
 
     /**
@@ -46,15 +59,19 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        dd('edit');
+        $item = User::find($id);
+
+        return view('admin.edit.employees', compact('item'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(EmployeeUpdateRequest $request, string $id)
     {
-        dd('update');
+        User::find($id)->update($request->validated());
+
+        return to_route('employees.index');
     }
 
     /**
