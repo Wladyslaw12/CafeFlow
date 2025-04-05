@@ -29,6 +29,10 @@ class TechMapController extends Controller
      */
     public function store(TechMapRequest $request)
     {
+        if($request->input('products') == null){
+            return back()->withErrors(['error' => 'Вы не выбрали ни одного товара']);
+        }
+
         $data = [
             'title' => $request->input('title'),
             'description' => $request->input('description'),
@@ -76,6 +80,10 @@ class TechMapController extends Controller
      */
     public function update(TechMapUpdateRequest $request, string $id)
     {
+        if($request->input('products') == null){
+            return back()->withErrors(['error' => 'Вы не выбрали ни одного товара']);
+        }
+
         $data = [
             'title' => $request->input('title'),
             'description' => $request->input('description'),

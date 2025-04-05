@@ -82,11 +82,11 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <input type="number" name="products[{{ $index }}][count]" class="form-control" min="1" required
+                                            <input type="number" name="products[{{ $index }}][count]" class="form-control" min="0.01" step="0.01" required
                                                    value="{{ $deliverProduct->count }}">
                                         </td>
                                         <td>
-                                            <input type="number" name="products[{{ $index }}][price]" class="form-control" min="0" step="0.01" required
+                                            <input type="number" name="products[{{ $index }}][price]" class="form-control" min="0.01" step="0.01" required
                                                    value="{{ $deliverProduct->price }}">
                                         </td>
                                         <td>
@@ -130,10 +130,10 @@
                 </select>
             </td>
             <td>
-                <input type="number" name="products[__INDEX__][count]" class="form-control" min="1" required>
+                <input type="number" name="products[__INDEX__][count]" class="form-control" min="0.01" step="0.01" required>
             </td>
             <td>
-                <input type="number" name="products[__INDEX__][price]" class="form-control" min="0" step="0.01" required>
+                <input type="number" name="products[__INDEX__][price]" class="form-control" min="0.01" step="0.01" required>
             </td>
             <td>
                 <button type="button" class="btn btn-danger remove-product-btn">

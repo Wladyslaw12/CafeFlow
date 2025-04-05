@@ -32,6 +32,10 @@ class SemimanufactureController extends Controller
      */
     public function store(SemimanufactureRequest $request)
     {
+        if($request->input('products') == null){
+            return back()->withErrors(['error' => 'Вы не выбрали ни одного товара']);
+        }
+
         $data = [
             'title' => $request->input('title'),
             'description' => $request->input('description'),
@@ -79,6 +83,10 @@ class SemimanufactureController extends Controller
      */
     public function update(SemimanufactureUpdateRequest $request, string $id)
     {
+        if($request->input('products') == null){
+            return back()->withErrors(['error' => 'Вы не выбрали ни одного товара']);
+        }
+
         $data = [
             'title' => $request->input('title'),
             'description' => $request->input('description'),

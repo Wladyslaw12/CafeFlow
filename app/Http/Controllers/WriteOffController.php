@@ -33,6 +33,10 @@ class WriteOffController extends Controller
      */
     public function store(WriteOffRequest $request)
     {
+        if($request->input('products') == null){
+            return back()->withErrors(['error' => 'Вы не выбрали ни одного товара']);
+        }
+
         $data = [
             'document_number' => $request->input('document_number'),
             'status' => $request->input('status'),
@@ -85,6 +89,10 @@ $products = RemainAction::run();
      */
     public function update(WriteOffUpdateRequest $request, string $id)
     {
+        if($request->input('products') == null){
+            return back()->withErrors(['error' => 'Вы не выбрали ни одного товара']);
+        }
+
         $data = [
             'document_number' => $request->input('document_number'),
             'status' => $request->input('status'),

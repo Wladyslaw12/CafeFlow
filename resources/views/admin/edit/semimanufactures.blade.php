@@ -19,7 +19,7 @@
             <div class="col-md-10">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Редактирование технической карты</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Редактирование полуфабриката</h6>
                     </div>
                     <div class="card-body">
                         <form method="POST" action="{{ route('semimanufactures.update', ['id' => $item->id]) }}">
@@ -75,7 +75,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <input type="number" name="products[{{ $index }}][count]" class="form-control" min="1" required
+                                            <input type="number" name="products[{{ $index }}][count]" class="form-control" min="0.01" step="0.01" required
                                                    value="{{ $itemProduct->count }}">
                                         </td>
                                         <td>
@@ -106,7 +106,6 @@
         </div>
     </div>
 
-    <!-- Шаблон строки продукта (скрытый) -->
     <table style="display: none;">
         <tbody>
         <tr id="product-row-template">
@@ -121,7 +120,7 @@
                 </select>
             </td>
             <td>
-                <input type="number" name="products[__INDEX__][count]" class="form-control" min="1" required>
+                <input type="number" name="products[__INDEX__][count]" class="form-control" min="0.01" step="0.01" required>
             </td>
             <td>
                 <button type="button" class="btn btn-danger remove-product-btn">

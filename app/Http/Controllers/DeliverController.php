@@ -34,6 +34,10 @@ class DeliverController extends Controller
      */
     public function store(DeliverRequest $request)
     {
+        if($request->input('products') == null){
+            return back()->withErrors(['error' => 'Вы не выбрали ни одного товара']);
+        }
+
         $data = [
             'suppliers_id' => $request->input('supplier_id'),
             'document_number' => $request->input('document_number'),
@@ -83,6 +87,10 @@ class DeliverController extends Controller
      */
     public function update(DeliverUpdateRequest $request, string $id)
     {
+        if($request->input('products') == null){
+            return back()->withErrors(['error' => 'Вы не выбрали ни одного товара']);
+        }
+
         $data = [
             'suppliers_id' => $request->input('supplier_id'),
             'document_number' => $request->input('document_number'),

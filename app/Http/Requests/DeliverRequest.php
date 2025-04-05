@@ -10,7 +10,7 @@ class DeliverRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'document_number' => ['required','numeric', 'between:1,2231231231232131231255', Rule::unique('delivers', 'document_number')],
+            'document_number' => ['required','numeric', 'between:1,2132324241', Rule::unique('delivers', 'document_number')],
             'comment' => ['required','string'],
         ];
     }
@@ -18,7 +18,8 @@ class DeliverRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'unique' => 'Такой номер документа уже используется'
+            'unique' => 'Такой номер документа уже используется',
+            'between.document_number' => 'Номер документа должен быть от 1 до 2132324241'
         ];
     }
 }
