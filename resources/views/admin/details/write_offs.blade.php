@@ -65,7 +65,7 @@
                             <div class="col-auto mb-2">
                                 <button class="btn btn-success btn-block" id="btn-edit"
                                         data-id="{{ $item['id'] }}"
-                                        onclick="window.location.href = '{{ route('delivers.edit', ['id' => $item['id']]) }}'">
+                                        onclick="window.location.href = '{{ route('write_offs.edit', ['id' => $item['id']]) }}'">
                                     <i class="fas fa-pen"></i>
                                 </button>
                             </div>

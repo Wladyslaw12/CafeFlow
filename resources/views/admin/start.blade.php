@@ -57,16 +57,14 @@
         <div class="accordion-item feature-card">
             <h3 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq">
-                    Для каких бизнесов подходит Cafe Flow?
+                    Для каких целей и бизнесов подходит Cafe Flow?
                 </button>
             </h3>
             <div id="faq" class="accordion-collapse collapse">
                 <div class="accordion-body">
                     <ul class="list-unstyled">
-                        <li><i class="fas fa-utensils me-2 text-muted"></i>Рестораны и кафе</li>
-                        <li><i class="fas fa-beer me-2 text-muted"></i>Бары и пабы</li>
-                        <li><i class="fas fa-coffee me-2 text-muted"></i>Кофейни</li>
-                        <li><i class="fas fa-store me-2 text-muted"></i>Фудкорты</li>
+                        <li>Для любых предприятий общественного питания (рестораны, бары, кафе, кофейни, столовые и др.) и магазинов.</li>
+                        <li>Программа позволяет экономить время на внедрении, обучении персонала, ежедневной рутине, а также повышать прибыль за счет мощных инструментов маркетинга, за которые не нужно отдельно доплачивать.</li>
                     </ul>
                 </div>
             </div>
@@ -76,57 +74,46 @@
         <div class="accordion-item feature-card">
             <h3 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
-                    Для каких бизнесов подходит Cafe Flow?
+                    Как мне связаться с поддержкой?
                 </button>
             </h3>
             <div id="faq1" class="accordion-collapse collapse">
                 <div class="accordion-body">
                     <ul class="list-unstyled">
-                        <li><i class="fas fa-utensils me-2 text-muted"></i>Рестораны и кафе</li>
-                        <li><i class="fas fa-beer me-2 text-muted"></i>Бары и пабы</li>
-                        <li><i class="fas fa-coffee me-2 text-muted"></i>Кофейни</li>
-                        <li><i class="fas fa-store me-2 text-muted"></i>Фудкорты</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="accordion mb-2">
-        <div class="accordion-item feature-card">
-            <h3 class="accordion-header">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
-                    Для каких бизнесов подходит Cafe Flow?
-                </button>
-            </h3>
-            <div id="faq2" class="accordion-collapse collapse">
-                <div class="accordion-body">
-                    <ul class="list-unstyled">
-                        <li><i class="fas fa-utensils me-2 text-muted"></i>Рестораны и кафе</li>
-                        <li><i class="fas fa-beer me-2 text-muted"></i>Бары и пабы</li>
-                        <li><i class="fas fa-coffee me-2 text-muted"></i>Кофейни</li>
-                        <li><i class="fas fa-store me-2 text-muted"></i>Фудкорты</li>
+                        <li>В мессенджерах (WhatsApp, Telegram), по-телефону и почте.</li>
+                        <li>На тарифах «Плюс» и «Индивидуальном» вы получите сопровождения персонального менеджера, который будет помогать по любым возникающим вопросам.</li>
+                        <li><i class="fas fa-paper-plane me-2 text-muted"></i>Telegram: t.me/vladossvegdaryadom</li>
+                        <li><i class="fas fa-phone me-2 text-muted"></i>Телефон: +375297982124</li>
+                        <li><i class="fas fa-envelope me-2 text-muted"></i>Email: vlad.03.gostishchev@mail.ru</li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Советы для начинающих -->
     <h2 class="section-title h3">Советы для начинающих</h2>
     <div class="accordion mb-2">
         <div class="accordion-item feature-card">
             <h3 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
-                    Для каких бизнесов подходит Cafe Flow?
+                    Секреты настроек Cafe Flow
                 </button>
             </h3>
             <div id="faq3" class="accordion-collapse collapse">
                 <div class="accordion-body">
                     <ul class="list-unstyled">
-                        <li><i class="fas fa-utensils me-2 text-muted"></i>Рестораны и кафе</li>
-                        <li><i class="fas fa-beer me-2 text-muted"></i>Бары и пабы</li>
-                        <li><i class="fas fa-coffee me-2 text-muted"></i>Кофейни</li>
-                        <li><i class="fas fa-store me-2 text-muted"></i>Фудкорты</li>
+                        <li>
+                            Система  предлагает множество тонких настроек, которые позволяют вам адаптировать интерфейс и навигацию под ваши конкретные нужды.
+                        </li>
+                        <li>
+                            • Настройка навигации: Вы можете настроить навигацию в системе так, чтобы сотрудникам было проще работать, минимизируя количество кликов до нужных операций.
+                        </li>
+                        <li>
+                            • Настройка внешнего вида: Изменяйте внешний вид и структуру системы, чтобы она соответствовала специфике вашей точки продаж — будь то ресторан, кафе или магазин.
+                        </li>
+                        <li>
+                            Совет: Воспользуйтесь возможностью настраивать роли и права доступа для разных сотрудников, чтобы каждый имел доступ только к тем модулям, которые ему нужны. Это ускорит работу и повысит безопасность данных. Также настройте внешний вид дашбордов так, чтобы вы всегда видели наиболее важные для вас метрики на главной странице.
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -136,41 +123,29 @@
         <div class="accordion-item feature-card">
             <h3 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
-                    Для каких бизнесов подходит Cafe Flow?
+                    Начните вести складской учет
                 </button>
             </h3>
             <div id="faq4" class="accordion-collapse collapse">
                 <div class="accordion-body">
                     <ul class="list-unstyled">
-                        <li><i class="fas fa-utensils me-2 text-muted"></i>Рестораны и кафе</li>
-                        <li><i class="fas fa-beer me-2 text-muted"></i>Бары и пабы</li>
-                        <li><i class="fas fa-coffee me-2 text-muted"></i>Кофейни</li>
-                        <li><i class="fas fa-store me-2 text-muted"></i>Фудкорты</li>
+                        <li>
+                            Складской учет в системе позволяет вам точно контролировать движение товаров и минимизировать убытки, связанные с недостачами или лишними запасами.
+                        </li>
+                        <li>
+                            • Почему это важно: Точный учет ингредиентов и товаров помогает предотвратить перерасход, избежать дефицита, а также лучше планировать закупки, что напрямую влияет на прибыль и стабильность бизнеса.
+                        </li>
+                        <li>
+                            • Как это работает: В системе вы можете вести учет поставок, списаний, проводить инвентаризацию и следить за остатками в реальном времени.
+                        </li>
+                        <li>
+                            Совет: Начните с базовой инвентаризации и заведите все ингредиенты и товары в систему. Используйте модуль для списаний и контроля остатков, чтобы в любой момент видеть реальную картину на складе. Это поможет вам избежать неожиданных ситуаций с нехваткой товаров, особенно в часы пик.
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
-    <div class="accordion mb-2">
-        <div class="accordion-item feature-card">
-            <h3 class="accordion-header">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
-                    Для каких бизнесов подходит Cafe Flow?
-                </button>
-            </h3>
-            <div id="faq5" class="accordion-collapse collapse">
-                <div class="accordion-body">
-                    <ul class="list-unstyled">
-                        <li><i class="fas fa-utensils me-2 text-muted"></i>Рестораны и кафе</li>
-                        <li><i class="fas fa-beer me-2 text-muted"></i>Бары и пабы</li>
-                        <li><i class="fas fa-coffee me-2 text-muted"></i>Кофейни</li>
-                        <li><i class="fas fa-store me-2 text-muted"></i>Фудкорты</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
 @endsection
 
 @section('scripts')

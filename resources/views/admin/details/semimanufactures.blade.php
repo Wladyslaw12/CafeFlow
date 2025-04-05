@@ -37,7 +37,14 @@
                                         <tbody>
                                         @foreach($semimanufactureProducts as $semimanufactureProduct)
                                             @php
-                                                $price = \App\Actions\SemimanufactureProductAction::run($item['id'],$semimanufactureProduct->product()->first()->id)/$semimanufactureProduct['count'];
+                                                $a = \App\Actions\SemimanufactureProductAction::run($item['id'],$semimanufactureProduct->product()->first()->id);
+
+                                                if($semimanufactureProduct['count'] <= $a['count']){
+                                                    $price = ceil($a['sum']/$a['count'] * 100) / 100;
+                                                }
+                                                else{
+                                                    $price = 0;
+                                                }
 
                                                 $totalSum += ($semimanufactureProduct['count']*$price);
                                             @endphp
@@ -49,14 +56,6 @@
                                             </tr>
                                         @endforeach
                                         </tbody>
-                                        <tfoot class="thead-light">
-                                        <tr>
-                                            <th>Итого</th>
-                                            <th></th>
-                                            <th></th>
-                                            <th>{{ $totalSum }} р.</th>
-                                        </tr>
-                                        </tfoot>
                                     </table>
                                 </div>
                             </div>

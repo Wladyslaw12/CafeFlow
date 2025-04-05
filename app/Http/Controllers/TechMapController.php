@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TechMapRequest;
+use App\Http\Requests\TechMapUpdateRequest;
 use App\Models\TechnicalMap;
+use App\Models\TechnicalMapProduct;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -16,20 +19,37 @@ class TechMapController extends Controller
             compact('data'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        dd('create');
+        return view('admin.create.tech-maps');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TechMapRequest $request)
     {
-        dd('store');
+        $data = [
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'unit_id' => $request->input('unit_id'),
+            'establishment_id' => auth()->user()->establishment_id
+        ];
+
+        $technicalMap = TechnicalMap::query()->create(
+            $data
+        );
+
+        foreach ($request->input('products') as $product) {
+            TechnicalMapProduct::query()->create([
+                'product_id' => $product['product_id'],
+                'technical_map_id' => $technicalMap->id,
+                'count' => $product['count'],
+                'establishment_id' => auth()->user()->establishment_id,
+            ]);
+        }
+
+        return to_route('tech-maps.index');
     }
 
     /**
@@ -46,15 +66,38 @@ class TechMapController extends Controller
      */
     public function edit(string $id)
     {
-        dd('edit');
+        $item = TechnicalMap::query()->find($id);
+
+        return view('admin.edit.tech-maps', compact('item'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(TechMapUpdateRequest $request, string $id)
     {
-        dd('update');
+        $data = [
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'unit_id' => $request->input('unit_id'),
+        ];
+
+        TechnicalMapProduct::query()->where('technical_map_id', '=',$id)->delete();
+
+        TechnicalMap::query()->find($id)->update(
+            $data
+        );
+
+        foreach ($request->input('products') as $product) {
+            TechnicalMapProduct::query()->create([
+                'product_id' => $product['product_id'],
+                'technical_map_id' => $id,
+                'count' => $product['count'],
+                'establishment_id' => auth()->user()->establishment_id,
+            ]);
+        }
+
+        return to_route('tech-maps.index');
     }
 
     /**

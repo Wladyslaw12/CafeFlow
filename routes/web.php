@@ -127,17 +127,11 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('schedules')->controller(ScheduleController::class)->group(function () {
-        Route::get('/create', 'create')->name('schedules.create');
-        Route::post('/', 'store')->name('schedules.store');
         Route::get('/','index')->name('schedules.index');
         Route::get('/{id}/edit', 'edit')->name('schedules.edit');
         Route::patch('/{id}', 'update')->name('schedules.update');
-        Route::delete('/{id}', 'destroy')->name('schedules.destroy');
     });
 });
-
-
-
 
 Route::controller(AuthController::class)->group(function () {
     Route::view('/login', 'login')->name('login');

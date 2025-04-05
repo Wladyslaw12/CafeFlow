@@ -11,6 +11,7 @@ class WriteOff extends Model
 
     protected $fillable = [
         'title',
+        'document_number',
         'establishment_id',
     ];
 

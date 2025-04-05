@@ -1,115 +1,163 @@
 @extends('admin.admin-layout')
 @section('styles')
-    <link href="{{asset('admin-assets/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('admin-assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="container mt-4">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-10">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Списание</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Редактирование списания</h6>
                     </div>
                     <div class="card-body">
-                        <ul class="list-group list-group-flush mb-4">
-                            <li class="list-group-item">Номер документа : №{{ $item['document_number'] }}</li>
-                            <li class="list-group-item">Статус : {{ $item['status'] }}</li>
-                            <li class="list-group-item">Дата и время : {{ \Carbon\Carbon::parse($item['created_at'])->format('d.m.Y H:i') }}</li>
-                        </ul>
+                        <form method="POST" action="{{ route('write_offs.update', ['id' => $item->id]) }}">
+                            @csrf
+                            @method('PATCH')
+                            <!-- Поля списания -->
+                            <div class="form-group">
+                                <label for="document_number">Номер документа</label>
+                                <input type="text" class="form-control" id="document_number" name="document_number"
+                                       value="{{ $item->document_number }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="status">Статус</label>
+                                <select class="form-control" id="status" name="status" required>
+                                    <option value="Проведено" {{ $item->status === 'Проведено' ? 'selected' : '' }}>Проведено</option>
+                                    <option value="Не проведено" {{ $item->status === 'Не проведено' ? 'selected' : '' }}>Не проведено</option>
+                                </select>
+                            </div>
 
-                        <div class="card mb-4">
-                            <div class="card-body p-0">
-                                <div class="table-responsive">
-                                    @php
-                                        $writeOffProducts = $item->writeOffProducts()->get();
-                                        $totalSum = 0;
-                                    @endphp
-                                    <table class="table table-bordered mb-0" width="100%" cellspacing="0">
-                                        <thead class="thead-light">
-                                        <tr>
-                                            <th>Название</th>
-                                            <th>Количество</th>
-                                            <th>Себестоимость</th>
-                                            <th>Сумма</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        @foreach($writeOffProducts as $writeOffProduct)
-                                            @php
-                                                $price = round(\App\Actions\WriteOffProductAction::run($item['id'],$writeOffProduct->product()->first()->id )/$writeOffProduct['count'],2);
+                            <hr>
+                            <h5>Продукты</h5>
+                            <table class="table table-bordered" id="products-table">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th>Продукт</th>
+                                    <th>Количество</th>
+                                    <th>Действия</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($item->writeOffProducts as $index => $itemProduct)
+                                    <tr>
+                                        <td>
+                                            <select name="products[{{ $index }}][product_id]" class="form-control" required>
+                                                <option value="">Выберите продукт</option>
+                                                @foreach(\App\Models\Product::query()->where('establishment_id', auth()->user()->establishment_id)->get() as $product)
+                                                    <option value="{{ $product->id }}"
+                                                            {{ $itemProduct->product_id == $product->id ? 'selected' : '' }}>
+                                                        {{ $product->title }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="number" name="products[{{ $index }}][count]" class="form-control" min="1" required
+                                                   value="{{ $itemProduct->count }}">
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger remove-product-btn">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="3">
+                                        <button type="button" class="btn btn-secondary" id="add-product-btn">
+                                            <i class="fas fa-plus"></i> Добавить продукт
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
 
-                                                $totalSum += ($writeOffProduct['count'] * $price);
-                                            @endphp
-                                            <tr>
-                                                <td>{{ $writeOffProduct->product()->first()->title }}</td>
-                                                <td>{{ $writeOffProduct['count'] .' ' . $writeOffProduct->product()->first()->unit()->first()->title}}</td>
-                                                <td>{{ $price }} р.</td>
-                                                <td>{{ $price * $writeOffProduct['count'] }} р.</td>
-                                            </tr>
-                                        @endforeach
-                                        </tbody>
-                                        <tfoot class="thead-light">
-                                        <tr>
-                                            <th>Итого</th>
-                                            <th></th>
-                                            <th></th>
-                                            <th>{{ $totalSum }} р.</th>
-                                        </tr>
-                                        </tfoot>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row justify-content-end">
-                            <div class="col-auto mb-2">
-                                <button class="btn btn-success btn-block" id="btn-edit"
-                                        data-id="{{ $item['id'] }}"
-                                        onclick="window.location.href = '{{ route('delivers.edit', ['id' => $item['id']]) }}'">
-                                    <i class="fas fa-pen"></i>
-                                </button>
-                            </div>
-                            <div class="col-auto">
-                                <button class="btn btn-danger btn-block" id="btn-delete"
-                                        data-id="{{ $item['id'] }}">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
+                            <button type="submit" class="btn btn-primary">Сохранить</button>
+                            <a href="{{ route('write_offs.index') }}" class="btn btn-secondary">Отмена</a>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Шаблон строки продукта (скрытый) -->
+    <table style="display: none;">
+        <tbody>
+        <tr id="product-row-template">
+            <td>
+                <select name="products[__INDEX__][product_id]" class="form-control" required>
+                    <option value="">Выберите продукт</option>
+                    @foreach(\App\Models\Product::query()->where('establishment_id', auth()->user()->establishment_id)->get() as $product)
+                        <option value="{{ $product->id }}">{{ $product->title }}</option>
+                    @endforeach
+                </select>
+            </td>
+            <td>
+                <input type="number" name="products[__INDEX__][count]" class="form-control" min="1" required>
+            </td>
+            <td>
+                <button type="button" class="btn btn-danger remove-product-btn">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 @endsection
 
 @section('scripts')
     <script>
-        let urlsSource = "{{ url(request()->getPathInfo()) }}";
-        let index = urlsSource.lastIndexOf('/')
-        const urls = urlsSource.slice(0, index);
+        // Устанавливаем начальное значение индекса равным количеству уже существующих продуктов
+        let productIndex = {{ count($item->writeOffProducts) }};
 
-        const token = $('meta[name="csrf-token"]').attr('content');
+        // Добавление новой строки продукта
+        document.getElementById('add-product-btn').addEventListener('click', function() {
+            let template = document.getElementById('product-row-template').cloneNode(true);
+            template.removeAttribute('id');
+            template.style.display = '';
+            template.innerHTML = template.innerHTML.replace(/__INDEX__/g, productIndex);
+            productIndex++;
+            document.querySelector('#products-table tbody').appendChild(template);
+        });
 
-        //delete func
-        $(document).on('click', '#btn-delete', function () {
-            let id = $(this).data('id'); // Получить ID сущности
+        // Удаление строки продукта
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.closest('.remove-product-btn')) {
+                e.target.closest('tr').remove();
+            }
+        });
 
-            if (confirm("Вы уверены, что хотите удалить?")) {
-                $.ajax({
-                    url: urls + `/${id}`, // URL маршрута
-                    type: 'DELETE', // Метод запроса
-                    data: {
-                        "_token": token // CSRF-токен
-                    },
-                    success: function (response) {
-                        alert('Удаление прошло успешно');
-                        window.location.href = '{{route('write_offs.index')}}';
-                    },
-                    error: function (error) {
-                        alert('Error deleting entity.'); // Обработка ошибок
+        // Проверка дублирования выбранного продукта
+        document.querySelector('#products-table tbody').addEventListener('change', function(e) {
+            if (e.target && e.target.matches('select[name^="products["]')) {
+                const selectedValue = e.target.value;
+                if (selectedValue === '') return;
+
+                let duplicateCount = 0;
+                document.querySelectorAll('#products-table tbody select[name^="products["]').forEach(function(select) {
+                    if (select.value === selectedValue) {
+                        duplicateCount++;
                     }
                 });
+
+                if (duplicateCount > 1) {
+                    alert('Этот продукт уже добавлен в списание.');
+                    e.target.value = '';
+                }
             }
         });
     </script>

@@ -45,7 +45,7 @@
                             <td>{{$item['title']}}</td>
                             <td>{{$item['description']}}</td>
                             <td>{{Unit::find($item['unit_id'])->title}}</td>
-                            <td>{{\App\Actions\SemimanufactureSumAction::run($item['id']) . ' р.'}}</td>
+                            <td>{{ceil(\App\Actions\SemimanufactureSumAction::run($item['id']) * 100) / 100 . ' р.'}}</td>
                             <td id="actions">
                                 <div class="row justify-content-center">
                                     <div class="col-auto mb-2">

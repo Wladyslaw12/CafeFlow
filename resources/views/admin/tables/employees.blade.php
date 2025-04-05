@@ -9,10 +9,12 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <button class="btn btn-success float-right"
-                    onclick="window.location.href = '{{route('employees.create')}}'">
-                <i class="fas fa-plus"></i>
-            </button>
+            @if(auth()->user()->role_id == 1)
+                <button class="btn btn-success float-right"
+                        onclick="window.location.href = '{{route('employees.create')}}'">
+                    <i class="fas fa-plus"></i>
+                </button>
+            @endif
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -44,23 +46,25 @@
                             <td>{{$item['email']}}</td>
                             <td>{{Role::find($item['role_id'])->title}}</td>
                                 <td id="actions">
-                                    <div class="row justify-content-center">
-                                        <div class="col-auto mb-2">
-                                            <button class="btn btn-success btn-block" id="btn-edit"
-                                                    data-id="{{$item['id'] }}"
-                                                    onclick=" window.location.href = '{{route('employees.edit', ['id' => $item['id']])}}'">
-                                                <i class="fas fa-pen"></i>
-                                            </button>
-                                        </div>
-                                        @if($item['id'] != auth()->user()->id)
-                                            <div class="col-auto">
-                                                <button class="btn btn-danger btn-block" id="btn-delete"
-                                                        data-id="{{$item['id'] }}">
-                                                    <i class="fas fa-trash"></i>
+                                    @if(auth()->user()->role_id == 1 || $item['id'] == auth()->user()->id )
+                                        <div class="row justify-content-center">
+                                            <div class="col-auto mb-2">
+                                                <button class="btn btn-success btn-block" id="btn-edit"
+                                                        data-id="{{$item['id'] }}"
+                                                        onclick=" window.location.href = '{{route('employees.edit', ['id' => $item['id']])}}'">
+                                                    <i class="fas fa-pen"></i>
                                                 </button>
                                             </div>
-                                        @endif
-                                    </div>
+                                            @if($item['id'] != auth()->user()->id)
+                                                <div class="col-auto">
+                                                    <button class="btn btn-danger btn-block" id="btn-delete"
+                                                            data-id="{{$item['id'] }}">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    @endif
                                 </td>
                         </tr>
                     @endforeach

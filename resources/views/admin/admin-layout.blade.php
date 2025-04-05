@@ -36,10 +36,8 @@
             <div class="sidebar-brand-text mx-3">Cafe Flow</div>
         </a>
 
-        <!-- Divider -->
         <hr class="sidebar-divider my-0">
 
-        <!-- Nav Item - Dashboard -->
         <li class="nav-item {{ request()->routeIs('start') ? 'active' : '' }}">
             <a class="nav-link collapsed" href="{{route('start')}}">
                 <i class="fas fa-info"></i>
@@ -65,7 +63,9 @@
             <div id="collapsePages1" class="collapse {{ request()->routeIs('products.index') || request()->routeIs('tech-maps.index') || request()->routeIs('semimanufactures.index') ? 'show' : '' }}" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item {{ request()->routeIs('products.index') ? 'active' : '' }}" href="{{route('products.index')}}">Товары</a>
-                    <a class="collapse-item {{ request()->routeIs('tech-maps.index') ? 'active' : '' }}" href="{{route('tech-maps.index')}}">Техкарты</a>
+                    @if(auth()->user()->role_id == 1 || auth()->user()->role_id == 2)
+                        <a class="collapse-item {{ request()->routeIs('tech-maps.index') ? 'active' : '' }}" href="{{route('tech-maps.index')}}">Техкарты</a>
+                    @endif
                     <a class="collapse-item {{ request()->routeIs('semimanufactures.index') ? 'active' : '' }}" href="{{route('semimanufactures.index')}}">Полуфабрикаты</a>
                 </div>
             </div>
@@ -81,8 +81,10 @@
                     <a class="collapse-item {{ request()->routeIs('suppliers.index') ? 'active' : '' }}" href="{{route('suppliers.index')}}">Поставщики</a>
                     <a class="collapse-item {{ request()->routeIs('delivers.index') ? 'active' : '' }}" href="{{route('delivers.index')}}">Поставки</a>
                     <a class="collapse-item {{ request()->routeIs('write_offs.index') ? 'active' : '' }}" href="{{route('write_offs.index')}}">Списания</a>
-                    <a class="collapse-item {{ request()->routeIs('remains.index') ? 'active' : '' }}" href="{{route('remains.index')}}">Остатки</a>
-                    <a class="collapse-item {{ request()->routeIs('inventory.index') ? 'active' : '' }}" href="{{route('inventory.index')}}">Инвентаризации</a>
+                    @if(auth()->user()->role_id == 1 || auth()->user()->role_id == 2)
+                        <a class="collapse-item {{ request()->routeIs('remains.index') ? 'active' : '' }}" href="{{route('remains.index')}}">Остатки</a>
+                        <a class="collapse-item {{ request()->routeIs('inventory.index') ? 'active' : '' }}" href="{{route('inventory.index')}}">Инвентаризации</a>
+                    @endif
                 </div>
             </div>
         </li>
@@ -121,46 +123,7 @@
                     <i class="fa fa-bars"></i>
                 </button>
 
-                <!-- Topbar Search -->
-                <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                    <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                               aria-label="Search" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
-                                <i class="fas fa-search fa-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-
-                <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
-
-                    <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                    <li class="nav-item dropdown no-arrow d-sm-none">
-                        <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-search fa-fw"></i>
-                        </a>
-                        <!-- Dropdown - Messages -->
-                        <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                             aria-labelledby="searchDropdown">
-                            <form class="form-inline mr-auto w-100 navbar-search">
-                                <div class="input-group">
-                                    <input type="text" class="form-control bg-light border-0 small"
-                                           placeholder="Search for..." aria-label="Search"
-                                           aria-describedby="basic-addon2">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="button">
-                                            <i class="fas fa-search fa-sm"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </li>
 
                     <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -218,15 +181,15 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Хотите выйти из профиля?</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-body">Выберите «Выход» ниже, если вы готовы завершить текущий сеанс.</div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="{{route('logoutAction')}}">Logout</a>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Отмена</button>
+                <a class="btn btn-primary" href="{{route('logoutAction')}}">Выход</a>
             </div>
         </div>f
     </div>

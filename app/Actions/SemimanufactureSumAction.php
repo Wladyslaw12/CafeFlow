@@ -19,26 +19,36 @@ class SemimanufactureSumAction
         $semimanufactureProducts = SemimanufactureProduct::query()->where('semimanufacture_id', '=', $id)->get();
 
         $sum = 0.0;
+        $count = 0.0;
+
 
         foreach ($semimanufactureProducts as $semimanufactureProduct) {
 
             $deliveredProducts = DeliverProduct::query()->where('product_id','=',$semimanufactureProduct['product_id'])->get();
             $writeOffCount = $semimanufactureProduct['count'];
+            $writeOffCount1 = $writeOffCount;
 
             foreach ($deliveredProducts as $deliveredProduct) {
                 if($writeOffCount > 0 && $deliveredProduct['count'] > 0){
                     $deliveredProduct['count'] = $deliveredProduct['count'] - $writeOffCount;
                     if($deliveredProduct['count'] < 0){
                         $sum += $deliveredProduct['price'] * ($deliveredProduct['count'] + $writeOffCount);
+                        $count += ($writeOffCount + $deliveredProduct['count']);
 
                         $writeOffCount = 0 - $deliveredProduct['count'];
                         $deliveredProduct['count'] = 0;
                     }
                     else{
                         $sum += $deliveredProduct['price'] * $writeOffCount;
+                        $count += $writeOffCount;
+
                         $writeOffCount = 0;
                     }
                 }
+            }
+
+            if($writeOffCount>0){
+                $sum=0;
             }
 
         }

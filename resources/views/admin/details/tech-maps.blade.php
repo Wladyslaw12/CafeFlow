@@ -37,7 +37,14 @@
                                         <tbody>
                                         @foreach($techMapProducts as $techMapProduct)
                                             @php
-                                                $price = \App\Actions\TechMapProductAction::run($item['id'],$techMapProduct->product()->first()->id)/$techMapProduct['count'];
+                                                $a = \App\Actions\TechMapProductAction::run($item['id'],$techMapProduct->product()->first()->id);
+
+                                                if($techMapProduct['count'] <= $a['count']){
+                                                    $price = ceil($a['sum']/$a['count'] * 100) / 100;
+                                                }
+                                                else{
+                                                    $price = 0;
+                                                }
 
                                                 $totalSum += ($techMapProduct['count']*$price);
                                             @endphp
@@ -49,14 +56,6 @@
                                             </tr>
                                         @endforeach
                                         </tbody>
-                                        <tfoot class="thead-light">
-                                        <tr>
-                                            <th>Итого</th>
-                                            <th></th>
-                                            <th></th>
-                                            <th>{{ $totalSum }} р.</th>
-                                        </tr>
-                                        </tfoot>
                                     </table>
                                 </div>
                             </div>

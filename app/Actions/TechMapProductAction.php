@@ -13,12 +13,13 @@ class TechMapProductAction
 {
     use AsAction;
 
-    public function handle(int $techMapId, int $productId): float
+    public function handle(int $techMapId, int $productId): array
     {
         $techMapProduct = TechnicalMapProduct::query()
             ->where('technical_map_id', '=' ,$techMapId)->firstWhere('product_id', '=', $productId);
 
         $sum = 0.0;
+        $count = 0.0;
 
         $deliveredProducts = DeliverProduct::query()->where('product_id','=',$productId)->get();
         $writeOffCount = $techMapProduct->count;
@@ -28,18 +29,19 @@ class TechMapProductAction
                 $deliveredProduct['count'] = $deliveredProduct['count'] - $writeOffCount;
                 if($deliveredProduct['count'] < 0){
                     $sum += $deliveredProduct['price'] * ($deliveredProduct['count'] + $writeOffCount);
-
+                    $count += ($writeOffCount + $deliveredProduct['count']);
                     $writeOffCount = 0 - $deliveredProduct['count'];
                     $deliveredProduct['count'] = 0;
                 }
                 else{
+                    $count += $writeOffCount;
                     $sum += $deliveredProduct['price'] * $writeOffCount;
                     $writeOffCount = 0;
                 }
             }
         }
 
-        return $sum;
+        return ['sum' => $sum, 'count' => $count];
     }
 
 }

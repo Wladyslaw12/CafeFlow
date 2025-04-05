@@ -18,26 +18,34 @@ class TechMapSumAction
         $techMapProducts = TechnicalMapProduct::query()->where('technical_map_id', '=', $id)->get();
 
         $sum = 0.0;
+        $count = 0.0;
 
         foreach ($techMapProducts as $techMapProduct) {
 
             $deliveredProducts = DeliverProduct::query()->where('product_id','=',$techMapProduct['product_id'])->get();
             $writeOffCount = $techMapProduct['count'];
+            $writeOffCount1 = $writeOffCount;
 
             foreach ($deliveredProducts as $deliveredProduct) {
                 if($writeOffCount > 0 && $deliveredProduct['count'] > 0){
                     $deliveredProduct['count'] = $deliveredProduct['count'] - $writeOffCount;
                     if($deliveredProduct['count'] < 0){
                         $sum += $deliveredProduct['price'] * ($deliveredProduct['count'] + $writeOffCount);
-
+                        $count += ($writeOffCount + $deliveredProduct['count']);
                         $writeOffCount = 0 - $deliveredProduct['count'];
                         $deliveredProduct['count'] = 0;
                     }
                     else{
                         $sum += $deliveredProduct['price'] * $writeOffCount;
+                        $count += $writeOffCount;
+
                         $writeOffCount = 0;
                     }
                 }
+            }
+
+            if($writeOffCount>0){
+                $sum=0;
             }
 
         }

@@ -1,117 +1,137 @@
-@php use App\Models\Unit;@endphp
 @extends('admin.admin-layout')
 @section('styles')
-    <link href="{{asset('admin-assets/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('admin-assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="container mt-4">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-10">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Полуфабрикат</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Создание полуфабриката</h6>
                     </div>
                     <div class="card-body">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Название : {{ $item['title'] }}</li>
-                            <li class="list-group-item">Описание : {{ $item['description'] }}</li>
-                            <li class="list-group-item">Единица измерения : {{Unit::find($item['unit_id'])->title}}</li>
-                        </ul>
-                        <div class="card mb-4">
-                            <div class="card-body p-0">
-                                <div class="table-responsive">
-                                    @php
-                                        $semimanufactureProducts = $item->semimanufactureProducts()->get();
-                                        $totalSum = 0;
-                                    @endphp
-                                    <table class="table table-bordered mb-0" width="100%" cellspacing="0">
-                                        <thead class="thead-light">
-                                        <tr>
-                                            <th>Название</th>
-                                            <th>Количество</th>
-                                            <th>Себестоимость</th>
-                                            <th>Сумма</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        @foreach($semimanufactureProducts as $semimanufactureProduct)
-                                            @php
-                                                $price = \App\Actions\SemimanufactureProductAction::run($item['id'],$semimanufactureProduct->product()->first()->id)/$semimanufactureProduct['count'];
+                        <form method="POST" action="{{ route('semimanufactures.store') }}">
+                            @csrf
+                            <div class="form-group">
+                                <label for="title">Название</label>
+                                <input type="text" class="form-control" id="title" name="title" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Описание</label>
+                                <input type="text" class="form-control" id="description" name="description" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="unit_id">Единица измерения</label>
+                                <select class="form-control" id="unit_id" name="unit_id" required>
+                                    @foreach(\App\Models\Unit::get() as $unit)
+                                        <option value="{{ $unit->id }}">{{ $unit->title }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
 
-                                                $totalSum += ($semimanufactureProduct['count']*$price);
-                                            @endphp
-                                            <tr>
-                                                <td>{{ $semimanufactureProduct->product()->first()->title }}</td>
-                                                <td>{{ $semimanufactureProduct['count'] .' ' . $semimanufactureProduct->product()->first()->unit()->first()->title}}</td>
-                                                <td>{{ $price }} р.</td>
-                                                <td>{{ ceil($semimanufactureProduct['count'] * $price * 100) / 100 }} р.</td>
-                                            </tr>
-                                        @endforeach
-                                        </tbody>
-                                        <tfoot class="thead-light">
-                                        <tr>
-                                            <th>Итого</th>
-                                            <th></th>
-                                            <th></th>
-                                            <th>{{ $totalSum }} р.</th>
-                                        </tr>
-                                        </tfoot>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mt-4">
-                            <div class="row justify-content-end">
-                                <div class="col-auto mb-2">
-                                    <button class="btn btn-success btn-block" id="btn-edit"
-                                            data-id="{{$item['id']}}"
-                                            onclick=" window.location.href = '{{route('semimanufactures.edit', ['id' => $item['id']])}}'">
-                                        <i class="fas fa-pen"></i>
-                                    </button>
-                                </div>
-                                <div class="col-auto">
-                                    <button class="btn btn-danger btn-block" id="btn-delete"
-                                            data-id="{{$item['id']}}">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                            <hr>
+                            <h5>Продукты</h5>
+                            <table class="table table-bordered" id="products-table">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th>Продукт</th>
+                                    <th>Количество</th>
+                                    <th>Действия</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="4">
+                                        <button type="button" class="btn btn-secondary" id="add-product-btn">
+                                            <i class="fas fa-plus"></i> Добавить продукт
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+
+                            <button type="submit" class="btn btn-primary">Добавить</button>
+                            <a href="{{ route('semimanufactures.index') }}" class="btn btn-secondary">Отмена</a>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <table style="display: none;">
+        <tbody>
+        <tr id="product-row-template">
+            <td>
+                <select name="products[__INDEX__][product_id]" class="form-control" required>
+                    <option value="">Выберите продукт</option>
+                    @foreach(\App\Models\Product::query()->where('establishment_id', auth()->user()->establishment_id)->get() as $product)
+                        <option value="{{ $product->id }}">{{ $product->title }}</option>
+                    @endforeach
+                </select>
+            </td>
+            <td>
+                <input type="number" name="products[__INDEX__][count]" class="form-control" min="1" required>
+            </td>
+            <td>
+                <button type="button" class="btn btn-danger remove-product-btn">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 @endsection
 
 @section('scripts')
     <script>
-        let urlsSource = "{{ url(request()->getPathInfo()) }}";
-        let index = urlsSource.lastIndexOf('/')
-        const urls = urlsSource.slice(0, index);
+        let productIndex = 0;
 
-        const token = $('meta[name="csrf-token"]').attr('content');
+        document.getElementById('add-product-btn').addEventListener('click', function() {
+            let template = document.getElementById('product-row-template').cloneNode(true);
+            template.removeAttribute('id');
+            template.style.display = '';
 
-        //delete func
-        $(document).on('click', '#btn-delete', function () {
-            let id = $(this).data('id'); // Получить ID сущности
+            template.innerHTML = template.innerHTML.replace(/__INDEX__/g, productIndex);
+            productIndex++;
+            document.querySelector('#products-table tbody').appendChild(template);
+        });
 
-            if (confirm("Вы уверены, что хотите удалить?")) {
-                $.ajax({
-                    url: urls + `/${id}`, // URL маршрута
-                    type: 'DELETE', // Метод запроса
-                    data: {
-                        "_token": token // CSRF-токен
-                    },
-                    success: function (response) {
-                        alert('Удаление прошло успешно');
-                        window.location.href = '{{route('semimanufactures.index')}}';
-                    },
-                    error: function (error) {
-                        alert('Error deleting entity.'); // Обработка ошибок
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.closest('.remove-product-btn')) {
+                e.target.closest('tr').remove();
+            }
+        });
+
+        document.querySelector('#products-table tbody').addEventListener('change', function(e) {
+            if (e.target && e.target.matches('select[name^="products["]')) {
+                const selectedValue = e.target.value;
+                if (selectedValue === '') return;
+
+                let duplicateCount = 0;
+                document.querySelectorAll('#products-table tbody select[name^="products["]').forEach(function(select) {
+                    if (select.value === selectedValue) {
+                        duplicateCount++;
                     }
                 });
+
+                if (duplicateCount > 1) {
+                    alert('Этот продукт уже добавлен.');
+                    e.target.value = '';
+                }
             }
         });
     </script>

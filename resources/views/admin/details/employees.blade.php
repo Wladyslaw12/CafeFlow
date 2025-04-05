@@ -22,7 +22,7 @@
                                 <div class="col-auto mb-2">
                                     <button class="btn btn-primary btn-block" id="btn-schedule"
                                             data-id="{{$item['id']}}"
-                                            onclick=" window.location.href = '{{route('employees.edit', ['id' => $item['id']])}}'">
+                                            onclick=" window.location.href = '{{route('schedules.edit', ['id' => $item['id']])}}'">
                                         <i class="fas fa-calendar-check"></i>
                                     </button>
                                 </div>
