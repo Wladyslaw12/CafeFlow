@@ -6,7 +6,6 @@
 @section('content')
     <h1 class="h3 mb-2 text-gray-800">Полуфабрикаты</h1>
 
-    <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <button class="btn btn-success float-right"
@@ -82,23 +81,22 @@
         const urls = "{{ url(request()->getPathInfo()) }}"
         const token = $('meta[name="csrf-token"]').attr('content');
 
-        //delete func
         $(document).on('click', '#btn-delete', function () {
-            let id = $(this).data('id'); // Получить ID сущности
+            let id = $(this).data('id');
 
             if (confirm("Подтвердите удаление")) {
                 $.ajax({
-                    url: urls + `/${id}`, // URL маршрута
-                    type: 'DELETE', // Метод запроса
+                    url: urls + `/${id}`,
+                    type: 'DELETE',
                     data: {
-                        "_token": token // CSRF-токен
+                        "_token": token
                     },
                     success: function (response) {
                         alert('Удаление прошло успешно');
-                        location.reload(); // Обновление страницы
+                        location.reload();
                     },
                     error: function (error) {
-                        alert('Error deleting entity.'); // Обработка ошибок
+                        alert('Error deleting entity.');
                     }
                 });
             }

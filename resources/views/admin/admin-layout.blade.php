@@ -7,13 +7,11 @@
 
     <title>Cafe Flow</title>
 
-    <!-- Custom fonts for this template-->
     <link href={{asset("admin-assets/vendor/fontawesome-free/css/all.min.css")}} rel="stylesheet" type="text/css">
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
 
-    <!-- Custom styles for this template-->
     <link href={{asset("admin-assets/css/sb-admin-2.min.css")}} rel="stylesheet">
     @yield('styles')
 
@@ -102,23 +100,17 @@
             </div>
         </li>
 
-        <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">
             <button class="rounded-circle border-0" id="sidebarToggle"></button>
         </div>
     </ul>
-    <!-- End of Sidebar -->
 
-    <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
 
-        <!-- Main Content -->
         <div id="content">
 
-            <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-                <!-- Sidebar Toggle (Topbar) -->
                 <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                     <i class="fa fa-bars"></i>
                 </button>
@@ -175,7 +167,6 @@
     <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Logout Modal-->
 <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -195,14 +186,11 @@
     </div>
 </div>
 
-<!-- Bootstrap core JavaScript-->
 <script src={{asset("admin-assets/vendor/jquery/jquery.min.js")}}></script>
 <script src={{asset("admin-assets/vendor/bootstrap/js/bootstrap.bundle.min.js")}}></script>
 
-<!-- Core plugin JavaScript-->
 <script src={{asset("admin-assets/vendor/jquery-easing/jquery.easing.min.js")}}></script>
 
-<!-- Custom scripts for all pages-->
 <script src={{asset("admin-assets/js/sb-admin-2.min.js")}}></script>
 
 @yield('scripts')

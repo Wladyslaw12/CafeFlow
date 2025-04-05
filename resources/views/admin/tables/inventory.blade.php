@@ -6,7 +6,6 @@
 @section('content')
     <h1 class="h3 mb-2 text-gray-800">Инвентаризация продуктов</h1>
 
-    <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <button class="btn btn-success float-right" onclick="inventoryCheck()">
@@ -60,21 +59,16 @@
 
     <script>
         function inventoryCheck() {
-            // Проходим по каждой строке таблицы
             document.querySelectorAll('tbody tr').forEach(function(row) {
-                // Извлекаем текст ожидаемого остатка и разбиваем по пробелу, чтобы получить только число
                 const expectedText = row.querySelector('.expected').textContent.trim();
                 const expectedValue = parseFloat(expectedText.split(' ')[0]) || 0;
 
-                // Получаем введённое фактическое количество
                 const actualInput = row.querySelector('.actual');
                 const actualValue = parseFloat(actualInput.value) || 0;
 
-                // Вычисляем разницу
                 const diff = actualValue - expectedValue;
                 const differenceCell = row.querySelector('.difference');
 
-                // Округляем разницу до 2-х знаков после запятой для удобства отображения
                 const diffFormatted = diff.toFixed(2);
 
                 if (diff === 0) {

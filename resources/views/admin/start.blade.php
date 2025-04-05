@@ -51,7 +51,6 @@
     </style>
 @endsection
 @section('content')
-    <!-- Часто задаваемые вопросы -->
     <h2 class="section-title h3">Часто задаваемые вопросы</h2>
     <div class="accordion mb-2">
         <div class="accordion-item feature-card">

@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CafeFlow - Регистрация заведения</title>
-    <!-- Bootstrap 5 CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome для иконок -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
@@ -85,7 +83,6 @@
                 <img src="{{ asset('storage/images/logo.png') }}" alt="logo" class="logo-auth">
                 <form action="{{ route('registerAction') }}" method="POST">
                     @csrf
-                    <!-- Название заведения -->
                     <div class="mb-3 icon-input">
                         <i class="fas fa-building"></i>
                         <input id="title"
@@ -96,7 +93,6 @@
                                required>
                     </div>
 
-                    <!-- Адрес -->
                     <div class="mb-3 icon-input">
                         <i class="fas fa-map-marker-alt"></i>
                         <input id="address"
@@ -121,7 +117,6 @@
                         >
                     </div>
 
-                    <!-- Форма предпринимательской деятельности -->
                     <div class="mb-3">
                         <select name="form_of_business_activity" id="form_of_business_activity" class="form-select" required>
                             <option value="" disabled selected>Выберите форму предпринимательской деятельности</option>
@@ -164,7 +159,6 @@
     </div>
 </div>
 
-<!-- Bootstrap JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
