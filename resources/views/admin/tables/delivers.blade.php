@@ -87,7 +87,6 @@
         const urls = "{{ url(request()->getPathInfo()) }}"
         const token = $('meta[name="csrf-token"]').attr('content');
 
-        //delete func
         $(document).on('click', '#btn-delete', function () {
             let id = $(this).data('id');
 
