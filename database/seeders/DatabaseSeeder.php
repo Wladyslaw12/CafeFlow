@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use App\Models\Day;
 use App\Models\Establishment;
 use App\Models\Role;
+use App\Models\Table;
+use App\Models\Unit;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -31,6 +33,29 @@ class DatabaseSeeder extends Seeder
         {
             Day::factory()->create([
                'title' => $days[$i-1]
+            ]);
+        }
+
+        for ($i=1; $i<=10; $i++){
+            Table::factory()->create([
+               'title' => 'Стол ' . $i,
+                'establishment_id' => 1,
+            ]);
+        }
+
+        $units = ['Кг.', 'Гр.', 'Л.', 'Мл.', 'Шт.'];
+
+        foreach ($units as $unit){
+            Unit::factory()->create([
+                'title' => $unit
+            ]);
+        }
+
+        $roles = ['Директор', 'Администратор', 'Шеф-бармен', 'Официант', 'Бармен', 'Кальянный мастер'];
+
+        foreach ($roles as $role){
+            Role::factory()->create([
+                'title' => $role
             ]);
         }
     }

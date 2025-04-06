@@ -25,7 +25,6 @@
                         <form method="POST" action="{{ route('delivers.update', ['id' => $item->id]) }}">
                             @csrf
                             @method('PATCH')
-                            <!-- Поля поставки -->
                             <div class="form-group">
                                 <label for="document_number">Номер документа</label>
                                 <input type="number" class="form-control" id="document_number" name="document_number"
@@ -117,7 +116,6 @@
         </div>
     </div>
 
-    <!-- Скрытый шаблон строки продукта -->
     <table style="display: none;">
         <tbody>
         <tr id="product-row-template">
@@ -147,10 +145,8 @@
 
 @section('scripts')
     <script>
-        // Устанавливаем productIndex равным количеству уже загруженных строк
         let productIndex = {{ count($item->deliverProducts) }};
 
-        // Добавление строки продукта
         document.getElementById('add-product-btn').addEventListener('click', function() {
             let template = document.getElementById('product-row-template').cloneNode(true);
             template.removeAttribute('id');
@@ -161,14 +157,12 @@
             document.querySelector('#products-table tbody').appendChild(template);
         });
 
-        // Удаление строки продукта
         document.addEventListener('click', function(e) {
             if (e.target && e.target.closest('.remove-product-btn')) {
                 e.target.closest('tr').remove();
             }
         });
 
-        // Обработчик изменения для select-элементов продуктов (проверка на дубликаты)
         document.querySelector('#products-table tbody').addEventListener('change', function(e) {
             if (e.target && e.target.matches('select[name^="products["]')) {
                 const selectedValue = e.target.value;
@@ -183,7 +177,7 @@
 
                 if (duplicateCount > 1) {
                     alert('Этот продукт уже добавлен в поставку.');
-                    e.target.value = ''; // Сбросить выбор для нового select-а
+                    e.target.value = '';
                 }
             }
         });

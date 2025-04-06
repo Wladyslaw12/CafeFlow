@@ -23,7 +23,6 @@
                     <div class="card-body">
                         <form method="POST" action="{{ route('delivers.store') }}">
                             @csrf
-                            <!-- Поля поставки -->
                             <div class="form-group">
                                 <label for="document_number">Номер документа</label>
                                 <input type="number" class="form-control" id="document_number" name="document_number" required>
@@ -128,7 +127,6 @@
             }
         });
 
-        // Обработчик изменения для select-элементов продуктов
         document.querySelector('#products-table tbody').addEventListener('change', function(e) {
             if (e.target && e.target.matches('select[name^="products["]')) {
                 const selectedValue = e.target.value;
@@ -143,7 +141,7 @@
 
                 if (duplicateCount > 1) {
                     alert('Этот продукт уже добавлен в поставку.');
-                    e.target.value = ''; // Сбросить выбор для нового select-а
+                    e.target.value = '';
                 }
             }
         });

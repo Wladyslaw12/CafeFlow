@@ -25,7 +25,6 @@
                         <form method="POST" action="{{ route('semimanufactures.update', ['id' => $item->id]) }}">
                             @csrf
                             @method('PATCH')
-                            <!-- Поля технической карты -->
                             <div class="form-group">
                                 <label for="title">Название</label>
                                 <input type="text" class="form-control" id="title" name="title"

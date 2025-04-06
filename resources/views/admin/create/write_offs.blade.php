@@ -111,7 +111,6 @@
             }
         });
 
-        // Обработчик изменения для select-элементов продуктов
         document.querySelector('#products-table tbody').addEventListener('change', function(e) {
             if (e.target && e.target.matches('select[name^="products["]')) {
                 const selectedValue = e.target.value;
@@ -126,7 +125,7 @@
 
                 if (duplicateCount > 1) {
                     alert('Этот продукт уже добавлен в поставку.');
-                    e.target.value = ''; // Сбросить выбор для нового select-а
+                    e.target.value = '';
                 }
             }
         });

@@ -48,23 +48,23 @@
 
         const token = $('meta[name="csrf-token"]').attr('content');
 
-        // Функция удаления
+
         $(document).on('click', '#btn-delete', function () {
-            let id = $(this).data('id'); // Получить ID сущности
+            let id = $(this).data('id');
 
             if (confirm("Вы уверены, что хотите удалить?")) {
                 $.ajax({
-                    url: urls + `/${id}`, // URL маршрута
-                    type: 'DELETE', // Метод запроса
+                    url: urls + `/${id}`,
+                    type: 'DELETE',
                     data: {
-                        "_token": token // CSRF-токен
+                        "_token": token
                     },
                     success: function (response) {
                         alert('Удаление прошло успешно');
                         window.location.href = '{{ route('suppliers.index') }}';
                     },
                     error: function (error) {
-                        alert('Error deleting entity.'); // Обработка ошибок
+                        alert('Error deleting entity.');
                     }
                 });
             }

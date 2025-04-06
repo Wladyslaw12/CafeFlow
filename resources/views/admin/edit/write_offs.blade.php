@@ -24,7 +24,6 @@
                         <form method="POST" action="{{ route('write_offs.update', ['id' => $item->id]) }}">
                             @csrf
                             @method('PATCH')
-                            <!-- Поля списания -->
                             <div class="form-group">
                                 <label for="document_number">Номер документа</label>
                                 <input type="text" class="form-control" id="document_number" name="document_number"
@@ -94,7 +93,6 @@
         </div>
     </div>
 
-    <!-- Шаблон строки продукта (скрытый) -->
     <table style="display: none;">
         <tbody>
         <tr id="product-row-template">
@@ -121,10 +119,8 @@
 
 @section('scripts')
     <script>
-        // Устанавливаем начальное значение индекса равным количеству уже существующих продуктов
         let productIndex = {{ count($item->writeOffProducts) }};
 
-        // Добавление новой строки продукта
         document.getElementById('add-product-btn').addEventListener('click', function() {
             let template = document.getElementById('product-row-template').cloneNode(true);
             template.removeAttribute('id');
@@ -134,14 +130,12 @@
             document.querySelector('#products-table tbody').appendChild(template);
         });
 
-        // Удаление строки продукта
         document.addEventListener('click', function(e) {
             if (e.target && e.target.closest('.remove-product-btn')) {
                 e.target.closest('tr').remove();
             }
         });
 
-        // Проверка дублирования выбранного продукта
         document.querySelector('#products-table tbody').addEventListener('change', function(e) {
             if (e.target && e.target.matches('select[name^="products["]')) {
                 const selectedValue = e.target.value;
