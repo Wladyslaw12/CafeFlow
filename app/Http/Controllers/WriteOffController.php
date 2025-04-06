@@ -37,12 +37,6 @@ class WriteOffController extends Controller
         if($request->input('products') == null){
             return back()->withErrors(['error' => 'Вы не выбрали ни одного товара']);
         }
-//Log::info($request->input('status'));
-//        $data = [
-//            'document_number' => $request->input('document_number'),
-//            'status' => $request->input('status'),
-//            'establishment_id' => auth()->user()->establishment_id
-//        ];
 
         $writeOff = WriteOff::query()->create(
             [

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('write_offs', function (Blueprint $table) {
             $table->id();
             $table->integer('document_number');
-            $table->enum('status', ['Проведено', 'Не проведено']);
+            $table->enum('status', ['Проведено', 'Не проведено'])->default('Оплачен');
             $table->foreignId('establishment_id')->constrained('establishments')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
