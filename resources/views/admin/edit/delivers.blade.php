@@ -50,7 +50,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="comment">Комментарий</label>
-                                <textarea class="form-control" id="comment" name="comment">{{ $item->comment }}</textarea>
+                                <textarea required class="form-control" id="comment" name="comment">{{ $item->comment }}</textarea>
                             </div>
 
                             <hr>
