@@ -13,6 +13,7 @@ class WriteOff extends Model
         'title',
         'document_number',
         'establishment_id',
+        'status'
     ];
 
     public function users()
