@@ -78,7 +78,7 @@
     <div class="row justify-content-center">
         <div class="col-md-6 col-lg-5">
             <div class="auth-card p-4">
-                <img src="{{ asset('storage/images/logo.png') }}" alt="logo" class="logo-auth">
+                <img src="{{ asset('images/logo.png') }}" alt="logo" class="logo-auth">
                 <form action="{{ route('registerDirAction') }}" method="POST">
                     @csrf
                     <div class="mb-3 icon-input">

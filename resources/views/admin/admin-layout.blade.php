@@ -27,7 +27,7 @@
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('establishment.show', ['id' => auth()->user()->establishment_id])}}">
             <div class="sidebar-brand-icon">
                 <img class="img-profile rounded-circle"
-                     src="{{asset('storage/images/CafeFlow.svg')}}"
+                     src="{{asset('images/CafeFlow.svg')}}"
                      alt="logo"
                      style="height: 2.3em; width: auto;">
             </div>
@@ -124,7 +124,7 @@
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{auth()->user()->name ?? 'name'}}</span>
                             <img class="img-profile rounded-circle"
-                                 src="{{asset('storage/images/undraw_profile.svg')}}" alt="profile">
+                                 src="{{asset('images/undraw_profile.svg')}}" alt="profile">
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
