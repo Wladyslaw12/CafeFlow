@@ -50,7 +50,7 @@ class WriteOffController extends Controller
             foreach ($products as $productik) {
                 if($productik['product']->id == $product['product_id']){
                     if($product['count']>$productik['count']){
-                        return to_route('write_offs.create', status: 200)->withErrors(['error' => 'На складе недостаточно продукта '.$productik['product']->title.' для списания']);
+                        return to_route('write_offs.create')->withErrors(['error' => 'На складе недостаточно продукта '.$productik['product']->title.' для списания']);
                     }
                 }
             }
