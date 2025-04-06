@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\WriteOff;
 use App\Models\WriteOffProduct;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class WriteOffController extends Controller
 {
@@ -36,7 +37,7 @@ class WriteOffController extends Controller
         if($request->input('products') == null){
             return back()->withErrors(['error' => 'Вы не выбрали ни одного товара']);
         }
-
+Log::info($request->input('status'));
         $data = [
             'document_number' => $request->input('document_number'),
             'status' => $request->input('status'),
