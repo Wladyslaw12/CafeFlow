@@ -12,7 +12,7 @@ class RegisterRequest extends FormRequest
             'title' => ['required','string', 'between:3,255','unique:establishments,title'],
             'address' => ['required','string', 'between:3,255'],
             'phone' => ['required','string', 'between:13,13'],
-            'form_of_business_activity' => ['required', 'in: ИП,ОАО,ООО'],
+            'form_of_business_activity' => ['required', 'in:ИП,ОАО,ООО'],
             'owner_name' => ['required', 'string', 'between:3,255'],
             'founding_date' => ['required']
         ];
