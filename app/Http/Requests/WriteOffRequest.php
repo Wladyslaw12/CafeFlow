@@ -18,7 +18,7 @@ class WriteOffRequest extends FormRequest
     {
         return [
             'unique' => 'Такой номер документа уже используется',
-            'between.document_number' => 'Номер документа должен быть от 1 до 2132324241'
+            'document_number' => 'Номер документа должен быть от 1 до 2132324241'
         ];
     }
 }

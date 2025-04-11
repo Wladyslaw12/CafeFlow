@@ -18,7 +18,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Role::factory()->create();
+        $roles = ['Директор', 'Администратор', 'Шеф-бармен', 'Официант', 'Бармен', 'Кальянный мастер'];
+
+        foreach ($roles as $role){
+            Role::factory()->create([
+                'title' => $role
+            ]);
+        }
 
         Establishment::factory()->create();
 
@@ -48,14 +54,6 @@ class DatabaseSeeder extends Seeder
         foreach ($units as $unit){
             Unit::factory()->create([
                 'title' => $unit
-            ]);
-        }
-
-        $roles = ['Директор', 'Администратор', 'Шеф-бармен', 'Официант', 'Бармен', 'Кальянный мастер'];
-
-        foreach ($roles as $role){
-            Role::factory()->create([
-                'title' => $role
             ]);
         }
     }
