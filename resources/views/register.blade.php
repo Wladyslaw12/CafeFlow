@@ -90,6 +90,7 @@
                                type="text"
                                class="form-control input-icon"
                                placeholder="Название заведения"
+                               value="{{ old('title') }}"
                                required>
                     </div>
 
@@ -100,6 +101,7 @@
                                type="text"
                                class="form-control input-icon"
                                placeholder="Адрес заведения"
+                               value="{{ old('address') }}"
                                required>
                     </div>
 
@@ -112,17 +114,17 @@
                                maxlength="13"
                                class="form-control input-icon"
                                placeholder="Номер телефона"
+                               value="{{ old('phone') }}"
                                required
-                               oninvalid="setCustomValidity('Введите номер в формате +375XXXXXXXXX')"
-                        >
+                               oninvalid="setCustomValidity('Введите номер в формате +375XXXXXXXXX')">
                     </div>
 
                     <div class="mb-3">
                         <select name="form_of_business_activity" id="form_of_business_activity" class="form-select" required>
-                            <option value="" disabled selected>Выберите форму предпринимательской деятельности</option>
-                            <option value="ООО">ООО</option>
-                            <option value="ОАО">ОАО</option>
-                            <option value="ИП">ИП</option>
+                            <option value="" disabled {{ old('form_of_business_activity') ? '' : 'selected' }}>Выберите форму предпринимательской деятельности</option>
+                            <option value="ООО" {{ old('form_of_business_activity') == 'ООО' ? 'selected' : '' }}>ООО</option>
+                            <option value="ОАО" {{ old('form_of_business_activity') == 'ОАО' ? 'selected' : '' }}>ОАО</option>
+                            <option value="ИП" {{ old('form_of_business_activity') == 'ИП' ? 'selected' : '' }}>ИП</option>
                         </select>
                     </div>
 
@@ -133,6 +135,7 @@
                                type="text"
                                class="form-control input-icon"
                                placeholder="ФИО владельца"
+                               value="{{ old('owner_name') }}"
                                required>
                     </div>
 
@@ -142,6 +145,7 @@
                                name="founding_date"
                                type="date"
                                class="form-control input-icon"
+                               value="{{ old('founding_date') }}"
                                required>
                     </div>
 

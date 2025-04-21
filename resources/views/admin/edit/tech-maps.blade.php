@@ -1,4 +1,5 @@
 @extends('admin.admin-layout')
+
 @section('styles')
     <link href="{{ asset('admin-assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 @endsection
@@ -28,17 +29,17 @@
 
                             <div class="form-group">
                                 <label for="title">Название</label>
-                                <input type="text" class="form-control" id="title" name="title" value="{{ $item->title }}" required>
+                                <input type="text" class="form-control" id="title" name="title" value="{{ old('title', $item->title) }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="description">Описание</label>
-                                <input type="text" class="form-control" id="description" name="description" value="{{ $item->description }}" required>
+                                <input type="text" class="form-control" id="description" name="description" value="{{ old('description', $item->description) }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="unit_id">Единица измерения</label>
                                 <select class="form-control" id="unit_id" name="unit_id" required>
                                     @foreach(\App\Models\Unit::get() as $unit)
-                                        <option value="{{ $unit->id }}" {{ $item->unit_id == $unit->id ? 'selected' : '' }}>
+                                        <option value="{{ $unit->id }}" {{ old('unit_id', $item->unit_id) == $unit->id ? 'selected' : '' }}>
                                             {{ $unit->title }}
                                         </option>
                                     @endforeach
@@ -65,14 +66,14 @@
                                                     ->where('establishment_id', auth()->user()->establishment_id)
                                                     ->get() as $product)
                                                     <option value="{{ $product->id }}"
-                                                            {{ $itemProduct->product_id == $product->id ? 'selected' : '' }}>
+                                                            {{ old('products.'.$index.'.product_id', $itemProduct->product_id) == $product->id ? 'selected' : '' }}>
                                                         {{ $product->title }}
                                                     </option>
                                                 @endforeach
                                             </select>
                                         </td>
                                         <td>
-                                            <input type="number" name="products[{{ $index }}][count]" class="form-control" min="0.01" step="0.01" required value="{{ $itemProduct->count }}">
+                                            <input type="number" name="products[{{ $index }}][count]" class="form-control" min="0.01" step="0.01" required value="{{ old('products.'.$index.'.count', $itemProduct->count) }}">
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-danger remove-product-btn">
@@ -101,7 +102,7 @@
             </div>
         </div>
     </div>
-    
+
     <table style="display: none;">
         <tbody>
         <tr id="product-row-template">
@@ -129,7 +130,7 @@
 @section('scripts')
     <script>
         let productIndex = {{ count($item->technicalMapProducts) }};
-        
+
         document.getElementById('add-product-btn').addEventListener('click', function() {
             let template = document.getElementById('product-row-template').cloneNode(true);
             template.removeAttribute('id');
@@ -138,13 +139,13 @@
             productIndex++;
             document.querySelector('#products-table tbody').appendChild(template);
         });
-        
+
         document.addEventListener('click', function(e) {
             if (e.target && e.target.closest('.remove-product-btn')) {
                 e.target.closest('tr').remove();
             }
         });
-        
+
         document.querySelector('#products-table tbody').addEventListener('change', function(e) {
             if (e.target && e.target.matches('select[name^="products["]')) {
                 const selectedValue = e.target.value;

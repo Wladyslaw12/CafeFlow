@@ -1,6 +1,6 @@
 @extends('admin.admin-layout')
 @section('styles')
-    <link href="{{asset('admin-assets/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('admin-assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -27,21 +27,39 @@
                             @method('PATCH')
                             <div class="form-group">
                                 <label for="name">Имя</label>
-                                <input type="text" class="form-control" id="name" name="name" value="{{$item['name']}}" required>
+                                <input
+                                        type="text"
+                                        class="form-control"
+                                        id="name"
+                                        name="name"
+                                        value="{{ old('name', $item['name']) }}"
+                                        required
+                                >
                             </div>
                             <div class="form-group">
                                 <label for="phone">Телефон</label>
-                                <input type="tel" class="form-control" id="phone" name="phone"
-                                       pattern="\+375\d{9}"
-                                       maxlength="13"
-                                       oninvalid="setCustomValidity('Введите номер в формате +375XXXXXXXXX')"
-                                       value="{{$item['phone']}}"
-                                       required
+                                <input
+                                        type="tel"
+                                        class="form-control"
+                                        id="phone"
+                                        name="phone"
+                                        pattern="\+375\d{9}"
+                                        maxlength="13"
+                                        oninvalid="setCustomValidity('Введите номер в формате +375XXXXXXXXX')"
+                                        value="{{ old('phone', $item['phone']) }}"
+                                        required
                                 >
                             </div>
                             <div class="form-group">
                                 <label for="card_number">Номер карты</label>
-                                <input type="number" class="form-control" id="card_number" name="card_number" value="{{$item['card_number']}}" required>
+                                <input
+                                        type="number"
+                                        class="form-control"
+                                        id="card_number"
+                                        name="card_number"
+                                        value="{{ old('card_number', $item['card_number']) }}"
+                                        required
+                                >
                             </div>
                             <button type="submit" class="btn btn-primary">Сохранить</button>
                             <a href="{{ route('clients.index') }}"
@@ -55,5 +73,4 @@
 @endsection
 
 @section('scripts')
-
 @endsection

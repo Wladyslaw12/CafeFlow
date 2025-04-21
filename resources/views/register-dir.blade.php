@@ -49,7 +49,7 @@
 
         .icon-input i.fa-user,
         .icon-input i.fa-envelope,
-        .icon-input i.fa-lock{
+        .icon-input i.fa-lock {
             position: absolute;
             left: 15px;
             top: 50%;
@@ -88,6 +88,7 @@
                                type="text"
                                class="form-control input-icon"
                                placeholder="Имя"
+                               value="{{ old('name') }}"
                                required>
                     </div>
 
@@ -98,6 +99,7 @@
                                type="email"
                                class="form-control input-icon"
                                placeholder="Электронная почта"
+                               value="{{ old('email') }}"
                                required>
                     </div>
 

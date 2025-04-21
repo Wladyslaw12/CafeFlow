@@ -92,12 +92,14 @@
                 <i class="fas fa-fw fa-handshake"></i>
                 <span>Группа клиентов</span>
             </a>
-            <div id="collapsePages3" class="collapse {{request()->routeIs('clients.index') || request()->routeIs('reservations.index') ? 'show' : '' }}" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item {{ request()->routeIs('clients.index') ? 'active' : '' }}" href="{{route('clients.index')}}">Клиенты</a>
-                    <a class="collapse-item {{ request()->routeIs('reservations.index') ? 'active' : '' }}" href="{{route('reservations.index')}}">Бронирование столов</a>
+            @if(auth()->user()->role_id != 7)
+                <div id="collapsePages3" class="collapse {{request()->routeIs('clients.index') || request()->routeIs('reservations.index') ? 'show' : '' }}" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item {{ request()->routeIs('clients.index') ? 'active' : '' }}" href="{{route('clients.index')}}">Клиенты</a>
+                        <a class="collapse-item {{ request()->routeIs('reservations.index') ? 'active' : '' }}" href="{{route('reservations.index')}}">Бронирование столов</a>
+                    </div>
                 </div>
-            </div>
+            @endif
         </li>
 
         <div class="text-center d-none d-md-inline">

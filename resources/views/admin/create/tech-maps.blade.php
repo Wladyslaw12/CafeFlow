@@ -1,6 +1,6 @@
 @extends('admin.admin-layout')
 @section('styles')
-    <link href="{{ asset('admin-assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+    <link href="{{asset('admin-assets/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -25,17 +25,42 @@
                             @csrf
                             <div class="form-group">
                                 <label for="title">Название</label>
-                                <input type="text" class="form-control" id="title" name="title" required>
+                                <input
+                                        type="text"
+                                        class="form-control"
+                                        id="title"
+                                        name="title"
+                                        value="{{ old('title') }}"
+                                        required
+                                >
                             </div>
                             <div class="form-group">
                                 <label for="description">Описание</label>
-                                <input type="text" class="form-control" id="description" name="description" required>
+                                <input
+                                        type="text"
+                                        class="form-control"
+                                        id="description"
+                                        name="description"
+                                        value="{{ old('description') }}"
+                                        required
+                                >
                             </div>
                             <div class="form-group">
                                 <label for="unit_id">Единица измерения</label>
-                                <select class="form-control" id="unit_id" name="unit_id" required>
+                                <select
+                                        class="form-control"
+                                        id="unit_id"
+                                        name="unit_id"
+                                        required
+                                >
+                                    <option value="">-- Выберите единицу --</option>
                                     @foreach(\App\Models\Unit::get() as $unit)
-                                        <option value="{{ $unit->id }}">{{ $unit->title }}</option>
+                                        <option
+                                                value="{{ $unit->id }}"
+                                                {{ old('unit_id') == $unit->id ? 'selected' : '' }}
+                                        >
+                                            {{ $unit->title }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -51,6 +76,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                {{-- при валидационной ошибке можно воспроизводить старые строки через old('products') --}}
                                 </tbody>
                                 <tfoot>
                                 <tr>
@@ -72,19 +98,30 @@
         </div>
     </div>
 
+    {{-- Шаблон строки --}}
     <table style="display: none;">
         <tbody>
         <tr id="product-row-template">
             <td>
                 <select name="products[__INDEX__][product_id]" class="form-control" required>
                     <option value="">Выберите продукт</option>
-                    @foreach(\App\Models\Product::query()->where('establishment_id', auth()->user()->establishment_id)->get() as $product)
+                    @foreach(\App\Models\Product::query()
+                             ->where('establishment_id', auth()->user()->establishment_id)
+                             ->get() as $product)
                         <option value="{{ $product->id }}">{{ $product->title }}</option>
                     @endforeach
                 </select>
             </td>
             <td>
-                <input type="number" name="products[__INDEX__][count]" class="form-control" min="0.01" step="0.01" required>
+                <input
+                        type="number"
+                        name="products[__INDEX__][count]"
+                        class="form-control"
+                        min="0.01"
+                        step="0.01"
+                        required
+                        value="{{ old('products.__INDEX__.count') }}"
+                >
             </td>
             <td>
                 <button type="button" class="btn btn-danger remove-product-btn">
@@ -122,10 +159,8 @@
                 if (selectedValue === '') return;
 
                 let duplicateCount = 0;
-                document.querySelectorAll('#products-table tbody select[name^="products["]').forEach(function(select) {
-                    if (select.value === selectedValue) {
-                        duplicateCount++;
-                    }
+                document.querySelectorAll('#products-table tbody select[name^="products["]').forEach(select => {
+                    if (select.value === selectedValue) duplicateCount++;
                 });
 
                 if (duplicateCount > 1) {

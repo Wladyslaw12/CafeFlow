@@ -28,14 +28,14 @@
                             <div class="form-group">
                                 <label for="document_number">Номер документа</label>
                                 <input type="number" class="form-control" id="document_number" name="document_number"
-                                       value="{{ $item->document_number }}" required>
+                                       value="{{ old('document_number', $item->document_number) }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="supplier_id">Поставщик</label>
                                 <select class="form-control" id="supplier_id" name="supplier_id" required>
                                     @foreach(\App\Models\Supplier::get() as $supplier)
                                         <option value="{{ $supplier->id }}"
-                                                {{ $item->supplier_id == $supplier->id ? 'selected' : '' }}>
+                                                {{ old('supplier_id', $item->supplier_id) == $supplier->id ? 'selected' : '' }}>
                                             {{ $supplier->title }}
                                         </option>
                                     @endforeach
@@ -44,13 +44,13 @@
                             <div class="form-group">
                                 <label for="payment_status">Статус оплаты</label>
                                 <select class="form-control" id="payment_status" name="payment_status" required>
-                                    <option value="Оплачен" {{ $item->payment_status == 'Оплачен' ? 'selected' : '' }}>Оплачен</option>
-                                    <option value="Не оплачен" {{ $item->payment_status == 'Не оплачен' ? 'selected' : '' }}>Не оплачен</option>
+                                    <option value="Оплачен" {{ old('payment_status', $item->payment_status) == 'Оплачен' ? 'selected' : '' }}>Оплачен</option>
+                                    <option value="Не оплачен" {{ old('payment_status', $item->payment_status) == 'Не оплачен' ? 'selected' : '' }}>Не оплачен</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="comment">Комментарий</label>
-                                <textarea required class="form-control" id="comment" name="comment">{{ $item->comment }}</textarea>
+                                <textarea required class="form-control" id="comment" name="comment">{{ old('comment', $item->comment) }}</textarea>
                             </div>
 
                             <hr>
@@ -65,16 +65,18 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($item->deliverProducts as $index => $deliverProduct)
+                                @php
+                                    $productsOld = old('products', []);
+                                    $productsData = !empty($productsOld) ? $productsOld : $item->deliverProducts->toArray();
+                                @endphp
+                                @foreach($productsData as $index => $deliverProduct)
                                     <tr>
                                         <td>
                                             <select name="products[{{ $index }}][product_id]" class="form-control" required>
                                                 <option value="">Выберите продукт</option>
-                                                @foreach(\App\Models\Product::query()
-                                                    ->where('establishment_id', auth()->user()->establishment_id)
-                                                    ->get() as $product)
+                                                @foreach(\App\Models\Product::where('establishment_id', auth()->user()->establishment_id)->get() as $product)
                                                     <option value="{{ $product->id }}"
-                                                            {{ $deliverProduct->product_id == $product->id ? 'selected' : '' }}>
+                                                            {{ (isset($deliverProduct['product_id']) && $deliverProduct['product_id'] == $product->id) ? 'selected' : '' }}>
                                                         {{ $product->title }}
                                                     </option>
                                                 @endforeach
@@ -82,11 +84,11 @@
                                         </td>
                                         <td>
                                             <input type="number" name="products[{{ $index }}][count]" class="form-control" min="0.01" step="0.01" required
-                                                   value="{{ $deliverProduct->count }}">
+                                                   value="{{ $deliverProduct['count'] ?? '' }}">
                                         </td>
                                         <td>
                                             <input type="number" name="products[{{ $index }}][price]" class="form-control" min="0.01" step="0.01" required
-                                                   value="{{ $deliverProduct->price }}">
+                                                   value="{{ $deliverProduct['price'] ?? '' }}">
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-danger remove-product-btn">
@@ -122,7 +124,7 @@
             <td>
                 <select name="products[__INDEX__][product_id]" class="form-control" required>
                     <option value="">Выберите продукт</option>
-                    @foreach(\App\Models\Product::query()->where('establishment_id', auth()->user()->establishment_id)->get() as $product)
+                    @foreach(\App\Models\Product::where('establishment_id', auth()->user()->establishment_id)->get() as $product)
                         <option value="{{ $product->id }}">{{ $product->title }}</option>
                     @endforeach
                 </select>
@@ -145,9 +147,9 @@
 
 @section('scripts')
     <script>
-        let productIndex = {{ count($item->deliverProducts) }};
+        let productIndex = {{ count($productsData) }};
 
-        document.getElementById('add-product-btn').addEventListener('click', function() {
+        document.getElementById('add-product-btn').addEventListener('click', function () {
             let template = document.getElementById('product-row-template').cloneNode(true);
             template.removeAttribute('id');
             template.style.display = '';
@@ -157,19 +159,19 @@
             document.querySelector('#products-table tbody').appendChild(template);
         });
 
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             if (e.target && e.target.closest('.remove-product-btn')) {
                 e.target.closest('tr').remove();
             }
         });
 
-        document.querySelector('#products-table tbody').addEventListener('change', function(e) {
+        document.querySelector('#products-table tbody').addEventListener('change', function (e) {
             if (e.target && e.target.matches('select[name^="products["]')) {
                 const selectedValue = e.target.value;
                 if (selectedValue === '') return;
 
                 let duplicateCount = 0;
-                document.querySelectorAll('#products-table tbody select[name^="products["]').forEach(function(select) {
+                document.querySelectorAll('#products-table tbody select[name^="products["]').forEach(function (select) {
                     if (select.value === selectedValue) {
                         duplicateCount++;
                     }

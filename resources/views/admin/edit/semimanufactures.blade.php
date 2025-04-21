@@ -28,19 +28,19 @@
                             <div class="form-group">
                                 <label for="title">Название</label>
                                 <input type="text" class="form-control" id="title" name="title"
-                                       value="{{ $item->title }}" required>
+                                       value="{{ old('title', $item->title) }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="description">Описание</label>
                                 <input type="text" class="form-control" id="description" name="description"
-                                       value="{{ $item->description }}" required>
+                                       value="{{ old('description', $item->description) }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="unit_id">Единица измерения</label>
                                 <select class="form-control" id="unit_id" name="unit_id" required>
                                     @foreach(\App\Models\Unit::get() as $unit)
                                         <option value="{{ $unit->id }}"
-                                                {{ $item->unit_id == $unit->id ? 'selected' : '' }}>
+                                                {{ old('unit_id', $item->unit_id) == $unit->id ? 'selected' : '' }}>
                                             {{ $unit->title }}
                                         </option>
                                     @endforeach
@@ -58,16 +58,24 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($item->semimanufactureProducts as $index => $itemProduct)
+                                @php
+                                    $productsOld = old('products', []);
+                                    $productRows = count($productsOld) > 0 ? $productsOld : $item->semimanufactureProducts->map(function($product) {
+                                        return [
+                                            'product_id' => $product->product_id,
+                                            'count' => $product->count
+                                        ];
+                                    })->toArray();
+                                @endphp
+
+                                @foreach($productRows as $index => $productRow)
                                     <tr>
                                         <td>
                                             <select name="products[{{ $index }}][product_id]" class="form-control" required>
                                                 <option value="">Выберите продукт</option>
-                                                @foreach(\App\Models\Product::query()
-                                                    ->where('establishment_id', auth()->user()->establishment_id)
-                                                    ->get() as $product)
+                                                @foreach(\App\Models\Product::where('establishment_id', auth()->user()->establishment_id)->get() as $product)
                                                     <option value="{{ $product->id }}"
-                                                            {{ $itemProduct->product_id == $product->id ? 'selected' : '' }}>
+                                                            {{ old("products.$index.product_id", $productRow['product_id']) == $product->id ? 'selected' : '' }}>
                                                         {{ $product->title }}
                                                     </option>
                                                 @endforeach
@@ -75,7 +83,7 @@
                                         </td>
                                         <td>
                                             <input type="number" name="products[{{ $index }}][count]" class="form-control" min="0.01" step="0.01" required
-                                                   value="{{ $itemProduct->count }}">
+                                                   value="{{ old("products.$index.count", $productRow['count']) }}">
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-danger remove-product-btn">
@@ -111,9 +119,7 @@
             <td>
                 <select name="products[__INDEX__][product_id]" class="form-control" required>
                     <option value="">Выберите продукт</option>
-                    @foreach(\App\Models\Product::query()
-                        ->where('establishment_id', auth()->user()->establishment_id)
-                        ->get() as $product)
+                    @foreach(\App\Models\Product::where('establishment_id', auth()->user()->establishment_id)->get() as $product)
                         <option value="{{ $product->id }}">{{ $product->title }}</option>
                     @endforeach
                 </select>
@@ -133,11 +139,9 @@
 
 @section('scripts')
     <script>
-        // Устанавливаем начальное значение productIndex равным количеству существующих строк
-        let productIndex = {{ count($item->semimanufactureProducts) }};
+        let productIndex = {{ count($productRows) }};
 
-        // Добавление новой строки продукта
-        document.getElementById('add-product-btn').addEventListener('click', function() {
+        document.getElementById('add-product-btn').addEventListener('click', function () {
             let template = document.getElementById('product-row-template').cloneNode(true);
             template.removeAttribute('id');
             template.style.display = '';
@@ -146,21 +150,19 @@
             document.querySelector('#products-table tbody').appendChild(template);
         });
 
-        // Удаление строки продукта
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             if (e.target && e.target.closest('.remove-product-btn')) {
                 e.target.closest('tr').remove();
             }
         });
 
-        // Проверка дублирования выбранного продукта
-        document.querySelector('#products-table tbody').addEventListener('change', function(e) {
+        document.querySelector('#products-table tbody').addEventListener('change', function (e) {
             if (e.target && e.target.matches('select[name^="products["]')) {
                 const selectedValue = e.target.value;
                 if (selectedValue === '') return;
 
                 let duplicateCount = 0;
-                document.querySelectorAll('#products-table tbody select[name^="products["]').forEach(function(select) {
+                document.querySelectorAll('#products-table tbody select[name^="products["]').forEach(function (select) {
                     if (select.value === selectedValue) {
                         duplicateCount++;
                     }

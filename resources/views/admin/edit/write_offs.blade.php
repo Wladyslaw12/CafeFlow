@@ -27,13 +27,13 @@
                             <div class="form-group">
                                 <label for="document_number">Номер документа</label>
                                 <input type="text" class="form-control" id="document_number" name="document_number"
-                                       value="{{ $item->document_number }}" required>
+                                       value="{{ old('document_number', $item->document_number) }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="status">Статус</label>
                                 <select class="form-control" id="status" name="status" required>
-                                    <option value="Проведено" {{ $item->status === 'Проведено' ? 'selected' : '' }}>Проведено</option>
-                                    <option value="Не проведено" {{ $item->status === 'Не проведено' ? 'selected' : '' }}>Не проведено</option>
+                                    <option value="Проведено" {{ old('status', $item->status) === 'Проведено' ? 'selected' : '' }}>Проведено</option>
+                                    <option value="Не проведено" {{ old('status', $item->status) === 'Не проведено' ? 'selected' : '' }}>Не проведено</option>
                                 </select>
                             </div>
 
@@ -55,7 +55,7 @@
                                                 <option value="">Выберите продукт</option>
                                                 @foreach(\App\Models\Product::query()->where('establishment_id', auth()->user()->establishment_id)->get() as $product)
                                                     <option value="{{ $product->id }}"
-                                                            {{ $itemProduct->product_id == $product->id ? 'selected' : '' }}>
+                                                            {{ old('products.' . $index . '.product_id', $itemProduct->product_id) == $product->id ? 'selected' : '' }}>
                                                         {{ $product->title }}
                                                     </option>
                                                 @endforeach
@@ -63,7 +63,7 @@
                                         </td>
                                         <td>
                                             <input type="number" name="products[{{ $index }}][count]" class="form-control" min="0.01" step="0.01" required
-                                                   value="{{ $itemProduct->count }}">
+                                                   value="{{ old('products.' . $index . '.count', $itemProduct->count) }}">
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-danger remove-product-btn">

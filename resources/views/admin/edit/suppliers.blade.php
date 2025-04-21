@@ -26,20 +26,34 @@
                               action="{{ route('suppliers.update', ['id' => $item['id']]) }}">
                             @csrf
                             @method('PATCH')
+
                             <div class="form-group">
                                 <label for="title">Название</label>
-                                <input type="text" class="form-control" id="title" name="title"
-                                       value = "{{$item['title']}}">
+                                <input type="text"
+                                       class="form-control @error('title') is-invalid @enderror"
+                                       id="title"
+                                       name="title"
+                                       value="{{ old('title', $item['title']) }}">
+                                @error('title')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
+
                             <div class="form-group">
                                 <label for="phone">Телефон</label>
-                                <input type="tel" class="form-control" id="phone" name="phone"
+                                <input type="tel"
+                                       class="form-control @error('phone') is-invalid @enderror"
+                                       id="phone"
+                                       name="phone"
                                        pattern="\+375\d{9}"
                                        maxlength="13"
-                                       oninvalid="setCustomValidity('Введите номер в формате +375XXXXXXXXX')"
-                                       value = "{{$item['phone']}}"
-                                >
+                                       value="{{ old('phone', $item['phone']) }}"
+                                       oninvalid="setCustomValidity('Введите номер в формате +375XXXXXXXXX')">
+                                @error('phone')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
+
                             <button type="submit" class="btn btn-primary">Сохранить</button>
                             <a href="{{ route('suppliers.index') }}"
                                class="btn btn-secondary">Отмена</a>

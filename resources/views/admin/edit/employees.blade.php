@@ -27,29 +27,27 @@
                             @method('PATCH')
                             <div class="form-group">
                                 <label for="name">Имя</label>
-                                <input type="text" class="form-control" id="name" name="name" value="{{$item['name']}}">
+                                <input type="text" class="form-control" id="name" name="name"
+                                       value="{{ old('name', $item['name']) }}">
                             </div>
                             <div class="form-group">
                                 <label for="email">Электронная почта</label>
-                                <input type="email" class="form-control" id="email" name="email" value="{{$item['email']}}">
+                                <input type="email" class="form-control" id="email" name="email"
+                                       value="{{ old('email', $item['email']) }}">
                             </div>
                             <div class="form-group">
                                 <label for="role_id">Роль</label>
                                 <select name="role_id" id="role_id" class="form-control">
                                     @foreach(\App\Models\Role::get() as $val)
-                                        <option value="{{$val->id}}"
-                                        @if($val->id == $item['role_id'])
-                                            selected
-                                        @endif
-                                        >
-                                            {{$val->title}}
+                                        <option value="{{ $val->id }}"
+                                                {{ (int) old('role_id', $item['role_id']) === $val->id ? 'selected' : '' }}>
+                                            {{ $val->title }}
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
                             <button type="submit" class="btn btn-primary">Сохранить</button>
-                            <a href="{{ route('clients.index') }}"
-                               class="btn btn-secondary">Отмена</a>
+                            <a href="{{ route('clients.index') }}" class="btn btn-secondary">Отмена</a>
                         </form>
                     </div>
                 </div>
@@ -59,5 +57,4 @@
 @endsection
 
 @section('scripts')
-
 @endsection

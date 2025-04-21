@@ -28,11 +28,13 @@
                             @method('PATCH')
                             <div class="form-group">
                                 <label for="title">Название</label>
-                                <input type="text" class="form-control" id="title" name="title" value="{{$item['title']}}">
+                                <input type="text" class="form-control" id="title" name="title"
+                                       value="{{ old('title', $item['title']) }}">
                             </div>
                             <div class="form-group">
                                 <label for="address">Адрес</label>
-                                <input type="text" class="form-control" id="address" name="address" value="{{$item['address']}}">
+                                <input type="text" class="form-control" id="address" name="address"
+                                       value="{{ old('address', $item['address']) }}">
                             </div>
                             <div class="form-group">
                                 <label for="phone">Телефон</label>
@@ -40,24 +42,25 @@
                                        pattern="\+375\d{9}"
                                        maxlength="13"
                                        oninvalid="setCustomValidity('Введите номер в формате +375XXXXXXXXX')"
-                                       value="{{$item['phone']}}"
-                                >
+                                       value="{{ old('phone', $item['phone']) }}">
                             </div>
                             <div class="form-group">
                                 <label for="form_of_business_activity">Форма предпринимательской деятельности</label>
                                 <select name="form_of_business_activity" id="form_of_business_activity" class="form-select" required>
-                                    <option value="ООО" @if($item['form_of_business_activity'] == 'ООО')selected @endif>ООО</option>
-                                    <option value="ОАО" @if($item['form_of_business_activity'] == 'ОАО')selected @endif>ОАО</option>
-                                    <option value="ИП" @if($item['form_of_business_activity'] == 'ИП')selected @endif>ИП</option>
+                                    <option value="ООО" {{ old('form_of_business_activity', $item['form_of_business_activity']) == 'ООО' ? 'selected' : '' }}>ООО</option>
+                                    <option value="ОАО" {{ old('form_of_business_activity', $item['form_of_business_activity']) == 'ОАО' ? 'selected' : '' }}>ОАО</option>
+                                    <option value="ИП" {{ old('form_of_business_activity', $item['form_of_business_activity']) == 'ИП' ? 'selected' : '' }}>ИП</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="owner_name">ФИО владельца</label>
-                                <input type="text" class="form-control" id="owner_name" name="owner_name" value="{{$item['owner_name']}}">
+                                <input type="text" class="form-control" id="owner_name" name="owner_name"
+                                       value="{{ old('owner_name', $item['owner_name']) }}">
                             </div>
                             <div class="form-group">
                                 <label for="founding_date">Дата создания</label>
-                                <input type="date" class="form-control" id="founding_date" name="founding_date" value="{{$item['founding_date']}}">
+                                <input type="date" class="form-control" id="founding_date" name="founding_date"
+                                       value="{{ old('founding_date', $item['founding_date']) }}">
                             </div>
                             <button type="submit" class="btn btn-primary">Сохранить</button>
                             <a href="{{ route('establishment.show', ['id' => $item['id']]) }}"

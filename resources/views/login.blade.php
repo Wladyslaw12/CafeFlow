@@ -95,8 +95,8 @@
     <div class="row justify-content-center">
         <div class="col-md-6 col-lg-5">
             <div class="auth-card p-4">
-                <img src="{{asset('images/logo.png')}}" alt="logo" class="logo-auth">
-                <form action="{{route('loginAction')}}" method="POST">
+                <img src="{{ asset('images/logo.png') }}" alt="logo" class="logo-auth">
+                <form action="{{ route('loginAction') }}" method="POST">
                     @csrf
                     <div class="mb-3 icon-input">
                         <i class="fas fa-envelope"></i>
@@ -105,6 +105,7 @@
                                type="email"
                                class="form-control input-icon"
                                placeholder="Введите email"
+                               value="{{ old('email') }}"
                                required>
                     </div>
 
@@ -115,6 +116,7 @@
                                name="password"
                                class="form-control input-icon"
                                placeholder="Введите пароль"
+                               value="{{ old('password') }}"
                                required>
                         <i class="password-toggle fas fa-eye" onclick="togglePassword()"></i>
                     </div>

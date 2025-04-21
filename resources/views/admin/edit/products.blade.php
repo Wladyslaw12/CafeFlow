@@ -28,18 +28,21 @@
                             @method('PATCH')
                             <div class="form-group">
                                 <label for="title">Название</label>
-                                <input type="text" class="form-control" id="title" name="title" value="{{$item['title']}}">
+                                <input type="text" class="form-control" id="title" name="title"
+                                       value="{{ old('title', $item['title']) }}">
                             </div>
                             <div class="form-group">
-                                <label for="title">Описание</label>
-                                <input type="text" class="form-control" id="description" name="description" value="{{$item['title']}}">
+                                <label for="description">Описание</label>
+                                <input type="text" class="form-control" id="description" name="description"
+                                       value="{{ old('description', $item['description']) }}">
                             </div>
                             <div class="form-group">
                                 <label for="unit_id">Единица измерения</label>
                                 <select name="unit_id" id="unit_id" class="form-control">
                                     @foreach(\App\Models\Unit::get() as $val)
-                                        <option value="{{$val->id}}" @if($val->id == $item['unit_id']) selected @endif>
-                                            {{$val->title}}
+                                        <option value="{{ $val->id }}"
+                                                {{ old('unit_id', $item['unit_id']) == $val->id ? 'selected' : '' }}>
+                                            {{ $val->title }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -48,19 +51,22 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="proteins">Белки</label>
-                                        <input type="number" class="form-control form-control-sm" id="proteins" name="proteins" value="{{$item['proteins']}}">
+                                        <input type="number" class="form-control form-control-sm" id="proteins" name="proteins"
+                                               value="{{ old('proteins', $item['proteins']) }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="fats">Жиры</label>
-                                        <input type="number" class="form-control form-control-sm" id="fats" name="fats" value="{{$item['fats']}}">
+                                        <input type="number" class="form-control form-control-sm" id="fats" name="fats"
+                                               value="{{ old('fats', $item['fats']) }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="carbohydrates">Углеводы</label>
-                                        <input type="number" class="form-control form-control-sm" id="carbohydrates" name="carbohydrates" value="{{$item['carbohydrates']}}">
+                                        <input type="number" class="form-control form-control-sm" id="carbohydrates" name="carbohydrates"
+                                               value="{{ old('carbohydrates', $item['carbohydrates']) }}">
                                     </div>
                                 </div>
                             </div>

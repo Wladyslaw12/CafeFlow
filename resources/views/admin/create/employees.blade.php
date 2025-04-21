@@ -1,6 +1,6 @@
 @extends('admin.admin-layout')
 @section('styles')
-    <link href="{{asset('admin-assets/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('admin-assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -26,22 +26,46 @@
                             @csrf
                             <div class="form-group">
                                 <label for="name">Имя</label>
-                                <input type="text" class="form-control" id="name" name="name">
+                                <input
+                                        type="text"
+                                        class="form-control"
+                                        id="name"
+                                        name="name"
+                                        value="{{ old('name') }}"
+                                        required
+                                >
                             </div>
                             <div class="form-group">
                                 <label for="email">Электронная почта</label>
-                                <input type="email" class="form-control" id="email" name="email">
+                                <input
+                                        type="email"
+                                        class="form-control"
+                                        id="email"
+                                        name="email"
+                                        value="{{ old('email') }}"
+                                        required
+                                >
                             </div>
                             <div class="form-group">
                                 <label for="password">Пароль</label>
-                                <input type="text" class="form-control" id="password" name="password">
+                                <input
+                                        type="password"
+                                        class="form-control"
+                                        id="password"
+                                        name="password"
+                                        {{-- обычно пароль не сохраняем через old --}}
+                                >
                             </div>
                             <div class="form-group">
                                 <label for="role_id">Роль</label>
-                                <select name="role_id" id="role_id" class="form-control">
+                                <select name="role_id" id="role_id" class="form-control" required>
+                                    <option value="">-- Выберите роль --</option>
                                     @foreach(\App\Models\Role::get() as $val)
-                                        <option value="{{$val->id}}">
-                                            {{$val->title}}
+                                        <option
+                                                value="{{ $val->id }}"
+                                                {{ old('role_id') == $val->id ? 'selected' : '' }}
+                                        >
+                                            {{ $val->title }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -58,5 +82,4 @@
 @endsection
 
 @section('scripts')
-
 @endsection

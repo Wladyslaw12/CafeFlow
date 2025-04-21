@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $roles = ['Директор', 'Администратор', 'Шеф-бармен', 'Официант', 'Бармен', 'Кальянный мастер'];
+        $roles = ['Директор', 'Администратор', 'Бренд шеф', 'Специалист по обслуживанию', 'Бартендер', 'Эксперт по к/к','Бухгалтер'];
 
         foreach ($roles as $role){
             Role::factory()->create([

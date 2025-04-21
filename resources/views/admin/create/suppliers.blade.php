@@ -26,14 +26,27 @@
                             @csrf
                             <div class="form-group">
                                 <label for="title">Название</label>
-                                <input type="text" class="form-control" id="title" name="title">
+                                <input
+                                        type="text"
+                                        class="form-control"
+                                        id="title"
+                                        name="title"
+                                        value="{{ old('title') }}"
+                                        required
+                                >
                             </div>
                             <div class="form-group">
                                 <label for="phone">Телефон</label>
-                                <input type="tel" class="form-control" id="phone" name="phone"
-                                       pattern="\+375\d{9}"
-                                       maxlength="13"
-                                       oninvalid="setCustomValidity('Введите номер в формате +375XXXXXXXXX')"
+                                <input
+                                        type="tel"
+                                        class="form-control"
+                                        id="phone"
+                                        name="phone"
+                                        pattern="\+375\d{9}"
+                                        maxlength="13"
+                                        value="{{ old('phone') }}"
+                                        oninvalid="setCustomValidity('Введите номер в формате +375XXXXXXXXX')"
+                                        required
                                 >
                             </div>
                             <button type="submit" class="btn btn-primary">Добавить</button>

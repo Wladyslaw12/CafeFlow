@@ -26,27 +26,38 @@
                             @csrf
                             <div class="form-group">
                                 <label for="table_id">Номер столика</label>
-                                <select name="table_id" id="table_id" class="form-control">
+                                <select name="table_id" id="table_id" class="form-control" required>
+                                    <option value="" disabled {{ old('table_id') === null ? 'selected' : '' }}>-- Выберите столик --</option>
                                     @foreach(\App\Models\Table::get() as $val)
-                                        <option value="{{$val->id}}">
-                                            {{$val->title}}
+                                        <option value="{{ $val->id }}"
+                                                {{ old('table_id') == $val->id ? 'selected' : '' }}>
+                                            {{ $val->title }}
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="client_id">Клиент</label>
-                                <select name="client_id" id="client_id" class="form-control">
+                                <select name="client_id" id="client_id" class="form-control" required>
+                                    <option value="" disabled {{ old('client_id') === null ? 'selected' : '' }}>-- Выберите клиента --</option>
                                     @foreach(\App\Models\Client::get() as $val)
-                                        <option value="{{$val->id}}">
-                                            {{$val->name}}
+                                        <option value="{{ $val->id }}"
+                                                {{ old('client_id') == $val->id ? 'selected' : '' }}>
+                                            {{ $val->name }}
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="reservation_date">Дата и время бронирования</label>
-                                <input type="datetime-local" class="form-control" id="reservation_date" name="reservation_date">
+                                <input
+                                        type="datetime-local"
+                                        class="form-control"
+                                        id="reservation_date"
+                                        name="reservation_date"
+                                        value="{{ old('reservation_date') }}"
+                                        required
+                                >
                             </div>
                             <button type="submit" class="btn btn-primary">Добавить</button>
                             <a href="{{ route('reservations.index') }}"
@@ -60,5 +71,4 @@
 @endsection
 
 @section('scripts')
-
 @endsection

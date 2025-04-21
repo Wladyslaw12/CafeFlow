@@ -23,15 +23,33 @@
                     <div class="card-body">
                         <form method="POST" action="{{ route('write_offs.store') }}">
                             @csrf
+
                             <div class="form-group">
                                 <label for="document_number">Номер документа</label>
-                                <input type="text" class="form-control" id="document_number" name="document_number" required>
+                                <input
+                                        type="text"
+                                        class="form-control"
+                                        id="document_number"
+                                        name="document_number"
+                                        value="{{ old('document_number') }}"
+                                        required
+                                >
                             </div>
+
                             <div class="form-group">
-                                <label for="payment_status">Статус</label>
-                                <select class="form-control" id="status" name="status" required>
-                                    <option value="Проведено">Проведено</option>
-                                    <option value="Не проведено">Не проведено</option>
+                                <label for="status">Статус</label>
+                                <select
+                                        class="form-control"
+                                        id="status"
+                                        name="status"
+                                        required
+                                >
+                                    <option value="Проведено" {{ old('status') === 'Проведено' ? 'selected' : '' }}>
+                                        Проведено
+                                    </option>
+                                    <option value="Не проведено" {{ old('status') === 'Не проведено' ? 'selected' : '' }}>
+                                        Не проведено
+                                    </option>
                                 </select>
                             </div>
 
@@ -46,10 +64,11 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                {{-- В случае ошибки валидации можно добавить здесь строки из old('products', []) --}}
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <td colspan="4">
+                                    <td colspan="3">
                                         <button type="button" class="btn btn-secondary" id="add-product-btn">
                                             <i class="fas fa-plus"></i> Добавить продукт
                                         </button>
@@ -67,19 +86,30 @@
         </div>
     </div>
 
+    {{-- Шаблон строки --}}
     <table style="display: none;">
         <tbody>
         <tr id="product-row-template">
             <td>
                 <select name="products[__INDEX__][product_id]" class="form-control" required>
                     <option value="">Выберите продукт</option>
-                    @foreach(\App\Models\Product::query()->where('establishment_id', auth()->user()->establishment_id)->get() as $product)
+                    @foreach(\App\Models\Product::query()
+                             ->where('establishment_id', auth()->user()->establishment_id)
+                             ->get() as $product)
                         <option value="{{ $product->id }}">{{ $product->title }}</option>
                     @endforeach
                 </select>
             </td>
             <td>
-                <input type="number" name="products[__INDEX__][count]" class="form-control" min="0.01" step="0.01" required>
+                <input
+                        type="number"
+                        name="products[__INDEX__][count]"
+                        class="form-control"
+                        min="0.01"
+                        step="0.01"
+                        required
+                        value="{{ old('products.'.__INDEX__.'.count') }}"
+                >
             </td>
             <td>
                 <button type="button" class="btn btn-danger remove-product-btn">
@@ -106,25 +136,18 @@
         });
 
         document.addEventListener('click', function(e) {
-            if (e.target && e.target.closest('.remove-product-btn')) {
+            if (e.target.closest('.remove-product-btn')) {
                 e.target.closest('tr').remove();
             }
         });
 
         document.querySelector('#products-table tbody').addEventListener('change', function(e) {
-            if (e.target && e.target.matches('select[name^="products["]')) {
-                const selectedValue = e.target.value;
-                if (selectedValue === '') return;
-
-                let duplicateCount = 0;
-                document.querySelectorAll('#products-table tbody select[name^="products["]').forEach(function(select) {
-                    if (select.value === selectedValue) {
-                        duplicateCount++;
-                    }
-                });
-
-                if (duplicateCount > 1) {
-                    alert('Этот продукт уже добавлен в поставку.');
+            if (e.target.matches('select[name^="products["]')) {
+                const val = e.target.value, selects = document.querySelectorAll('#products-table tbody select[name^="products["]');
+                let count = 0;
+                selects.forEach(s => s.value === val && count++);
+                if (count > 1) {
+                    alert('Этот продукт уже добавлен.');
                     e.target.value = '';
                 }
             }

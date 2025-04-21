@@ -1,6 +1,6 @@
 @extends('admin.admin-layout')
 @section('styles')
-    <link href="{{asset('admin-assets/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('admin-assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -26,18 +26,40 @@
                             @csrf
                             <div class="form-group">
                                 <label for="title">Название</label>
-                                <input type="text" class="form-control" id="title" name="title">
+                                <input
+                                        type="text"
+                                        class="form-control"
+                                        id="title"
+                                        name="title"
+                                        value="{{ old('title') }}"
+                                        required
+                                >
                             </div>
                             <div class="form-group">
                                 <label for="description">Описание</label>
-                                <textarea type="text" class="form-control" id="description" name="description"></textarea>
+                                <textarea
+                                        class="form-control"
+                                        id="description"
+                                        name="description"
+                                        rows="3"
+                                        required
+                                >{{ old('description') }}</textarea>
                             </div>
                             <div class="form-group">
                                 <label for="unit_id">Единица измерения</label>
-                                <select name="unit_id" id="unit_id" class="form-control">
+                                <select
+                                        name="unit_id"
+                                        id="unit_id"
+                                        class="form-control"
+                                        required
+                                >
+                                    <option value="">-- Выберите единицу --</option>
                                     @foreach(\App\Models\Unit::get() as $val)
-                                        <option value="{{$val->id}}">
-                                            {{$val->title}}
+                                        <option
+                                                value="{{ $val->id }}"
+                                                {{ old('unit_id') == $val->id ? 'selected' : '' }}
+                                        >
+                                            {{ $val->title }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -46,19 +68,43 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="proteins">Белки</label>
-                                        <input type="number" class="form-control form-control-sm" id="proteins" name="proteins">
+                                        <input
+                                                type="number"
+                                                step="0.01"
+                                                class="form-control form-control-sm"
+                                                id="proteins"
+                                                name="proteins"
+                                                value="{{ old('proteins') }}"
+                                                required
+                                        >
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="fats">Жиры</label>
-                                        <input type="number" class="form-control form-control-sm" id="fats" name="fats">
+                                        <input
+                                                type="number"
+                                                step="0.01"
+                                                class="form-control form-control-sm"
+                                                id="fats"
+                                                name="fats"
+                                                value="{{ old('fats') }}"
+                                                required
+                                        >
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="carbohydrates">Углеводы</label>
-                                        <input type="number" class="form-control form-control-sm" id="carbohydrates" name="carbohydrates">
+                                        <input
+                                                type="number"
+                                                step="0.01"
+                                                class="form-control form-control-sm"
+                                                id="carbohydrates"
+                                                name="carbohydrates"
+                                                value="{{ old('carbohydrates') }}"
+                                                required
+                                        >
                                     </div>
                                 </div>
                             </div>

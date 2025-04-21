@@ -1,6 +1,6 @@
 @extends('admin.admin-layout')
 @section('styles')
-    <link href="{{asset('admin-assets/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('admin-assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -26,19 +26,39 @@
                             @csrf
                             <div class="form-group">
                                 <label for="name">Имя</label>
-                                <input type="text" class="form-control" id="name" name="name">
+                                <input
+                                        type="text"
+                                        class="form-control"
+                                        id="name"
+                                        name="name"
+                                        value="{{ old('name') }}"
+                                        required
+                                >
                             </div>
                             <div class="form-group">
                                 <label for="phone">Телефон</label>
-                                <input type="tel" class="form-control" id="phone" name="phone"
-                                       pattern="\+375\d{9}"
-                                       maxlength="13"
-                                       oninvalid="setCustomValidity('Введите номер в формате +375XXXXXXXXX')"
+                                <input
+                                        type="tel"
+                                        class="form-control"
+                                        id="phone"
+                                        name="phone"
+                                        pattern="\+375\d{9}"
+                                        maxlength="13"
+                                        oninvalid="setCustomValidity('Введите номер в формате +375XXXXXXXXX')"
+                                        value="{{ old('phone') }}"
+                                        required
                                 >
                             </div>
                             <div class="form-group">
                                 <label for="card_number">Номер карты</label>
-                                <input type="number" class="form-control" id="card_number" name="card_number">
+                                <input
+                                        type="number"
+                                        class="form-control"
+                                        id="card_number"
+                                        name="card_number"
+                                        value="{{ old('card_number') }}"
+                                        required
+                                >
                             </div>
 
                             <button type="submit" class="btn btn-primary">Добавить</button>
@@ -53,5 +73,4 @@
 @endsection
 
 @section('scripts')
-
 @endsection

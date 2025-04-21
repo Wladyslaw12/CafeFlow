@@ -25,26 +25,44 @@
                             @csrf
                             <div class="form-group">
                                 <label for="document_number">Номер документа</label>
-                                <input type="number" class="form-control" id="document_number" name="document_number" required>
+                                <input
+                                        type="number"
+                                        class="form-control"
+                                        id="document_number"
+                                        name="document_number"
+                                        value="{{ old('document_number') }}"
+                                        required
+                                >
                             </div>
                             <div class="form-group">
                                 <label for="supplier_id">Поставщик</label>
                                 <select class="form-control" id="supplier_id" name="supplier_id" required>
+                                    <option value="">-- Выберите поставщика --</option>
                                     @foreach(\App\Models\Supplier::get() as $supplier)
-                                        <option value="{{ $supplier->id }}">{{ $supplier->title }}</option>
+                                        <option
+                                                value="{{ $supplier->id }}"
+                                                {{ old('supplier_id') == $supplier->id ? 'selected' : '' }}
+                                        >
+                                            {{ $supplier->title }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="payment_status">Статус оплаты</label>
                                 <select class="form-control" id="payment_status" name="payment_status" required>
-                                    <option value="Оплачен">Оплачен</option>
-                                    <option value="Не оплачен">Не оплачен</option>
+                                    <option value="Оплачен" {{ old('payment_status') == 'Оплачен' ? 'selected' : '' }}>Оплачен</option>
+                                    <option value="Не оплачен" {{ old('payment_status') == 'Не оплачен' ? 'selected' : '' }}>Не оплачен</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="comment">Комментарий</label>
-                                <textarea class="form-control" id="comment" name="comment"></textarea>
+                                <textarea
+                                        class="form-control"
+                                        id="comment"
+                                        name="comment"
+                                        rows="3"
+                                >{{ old('comment') }}</textarea>
                             </div>
 
                             <hr>
@@ -59,6 +77,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                {{-- динамические строки --}}
                                 </tbody>
                                 <tfoot>
                                 <tr>
@@ -86,16 +105,34 @@
             <td>
                 <select name="products[__INDEX__][product_id]" class="form-control" required>
                     <option value="">Выберите продукт</option>
-                    @foreach(\App\Models\Product::query()->where('establishment_id', auth()->user()->establishment_id)->get() as $product)
+                    @foreach(\App\Models\Product::query()
+                             ->where('establishment_id', auth()->user()->establishment_id)
+                             ->get() as $product)
                         <option value="{{ $product->id }}">{{ $product->title }}</option>
                     @endforeach
                 </select>
             </td>
             <td>
-                <input type="number" name="products[__INDEX__][count]" class="form-control" min="0.01" step="0.01" required>
+                <input
+                        type="number"
+                        name="products[__INDEX__][count]"
+                        class="form-control"
+                        min="0.01"
+                        step="0.01"
+                        required
+                        value="{{ old('products.__INDEX__.count') }}"
+                >
             </td>
             <td>
-                <input type="number" name="products[__INDEX__][price]" class="form-control" min="0.01" step="0.01" required>
+                <input
+                        type="number"
+                        name="products[__INDEX__][price]"
+                        class="form-control"
+                        min="0.01"
+                        step="0.01"
+                        required
+                        value="{{ old('products.__INDEX__.price') }}"
+                >
             </td>
             <td>
                 <button type="button" class="btn btn-danger remove-product-btn">

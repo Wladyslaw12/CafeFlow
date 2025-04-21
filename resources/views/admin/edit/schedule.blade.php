@@ -41,11 +41,11 @@
                                         <td>{{ $dayName }}</td>
                                         <td>
                                             <input type="time" name="schedule[{{ $dayId }}][start_time]" class="form-control"
-                                                   value="{{isset($data[$dayId]['start_time']) ? \Carbon\Carbon::parse($data[$dayId]['start_time'])->format('H:i') : '' }}">
+                                                   value="{{ old("schedule.$dayId.start_time", isset($data[$dayId]['start_time']) ? \Carbon\Carbon::parse($data[$dayId]['start_time'])->format('H:i') : '') }}">
                                         </td>
                                         <td>
                                             <input type="time" name="schedule[{{ $dayId }}][end_time]" class="form-control"
-                                                   value="{{isset($data[$dayId]['end_time']) ? \Carbon\Carbon::parse($data[$dayId]['end_time'])->format('H:i') : '' }}">
+                                                   value="{{ old("schedule.$dayId.end_time", isset($data[$dayId]['end_time']) ? \Carbon\Carbon::parse($data[$dayId]['end_time'])->format('H:i') : '') }}">
                                         </td>
                                     </tr>
                                 @endforeach

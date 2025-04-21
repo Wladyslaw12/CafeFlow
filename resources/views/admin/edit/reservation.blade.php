@@ -30,8 +30,9 @@
                                 <label for="table_id">Номер столика</label>
                                 <select name="table_id" id="table_id" class="form-control">
                                     @foreach(\App\Models\Table::get() as $val)
-                                        <option value="{{$val->id}}" @if($val->id == $item['table_id']) selected @endif>
-                                            {{$val->title}}
+                                        <option value="{{ $val->id }}"
+                                                {{ old('table_id', $item['table_id']) == $val->id ? 'selected' : '' }}>
+                                            {{ $val->title }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -40,15 +41,17 @@
                                 <label for="client_id">Клиент</label>
                                 <select name="client_id" id="client_id" class="form-control">
                                     @foreach(\App\Models\Client::get() as $val)
-                                        <option value="{{$val->id}}" @if($val->id == $item['client_id']) selected @endif>
-                                            {{$val->name}}
+                                        <option value="{{ $val->id }}"
+                                                {{ old('client_id', $item['client_id']) == $val->id ? 'selected' : '' }}>
+                                            {{ $val->name }}
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="reservation_date">Дата и время бронирования</label>
-                                <input type="datetime-local" class="form-control" id="reservation_date" name="reservation_date" value="{{$item['reservation_date']}}">
+                                <input type="datetime-local" class="form-control" id="reservation_date" name="reservation_date"
+                                       value="{{ old('reservation_date', \Carbon\Carbon::parse($item['reservation_date'])->format('Y-m-d\TH:i')) }}">
                             </div>
                             <button type="submit" class="btn btn-primary">Сохранить</button>
                             <a href="{{ route('reservations.index') }}"
