@@ -24,7 +24,7 @@ class AuthController extends Controller
             return to_route('start')->with('success', 'Вход успешен');
         }
 
-        return redirect()->back();
+        return redirect()->back()->withErrors('Неверный логин или пароль');
     }
 
     public function logout(Request $request)

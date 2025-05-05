@@ -83,20 +83,20 @@
 </head>
 <body class="d-flex align-items-center">
 <div class="container">
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
     <div class="row justify-content-center">
         <div class="col-md-6 col-lg-5">
             <div class="auth-card p-4">
                 <img src="{{ asset('images/logo.png') }}" alt="logo" class="logo-auth">
                 <form action="{{ route('loginAction') }}" method="POST">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     @csrf
                     <div class="mb-3 icon-input">
                         <i class="fas fa-envelope"></i>
