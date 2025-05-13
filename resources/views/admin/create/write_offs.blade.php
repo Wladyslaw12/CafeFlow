@@ -1,4 +1,5 @@
 @extends('admin.admin-layout')
+
 @section('styles')
     <link href="{{ asset('admin-assets/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 @endsection
@@ -13,6 +14,14 @@
             </ul>
         </div>
     @endif
+
+    @php
+        // Список продуктов для селекта
+        $products = \App\Models\Product::where('establishment_id', auth()->user()->establishment_id)->get();
+        // Старые введённые строки
+        $oldProducts = old('products', []);
+    @endphp
+
     <div class="container mt-4">
         <div class="row justify-content-center">
             <div class="col-md-10">
@@ -64,7 +73,36 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {{-- В случае ошибки валидации можно добавить здесь строки из old('products', []) --}}
+                                @foreach($oldProducts as $i => $row)
+                                    <tr>
+                                        <td>
+                                            <select name="products[{{ $i }}][product_id]" class="form-control" required>
+                                                <option value="">Выберите продукт</option>
+                                                @foreach($products as $product)
+                                                    <option value="{{ $product->id }}" {{ $row['product_id'] == $product->id ? 'selected' : '' }}>
+                                                        {{ $product->title }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input
+                                                    type="number"
+                                                    name="products[{{ $i }}][count]"
+                                                    class="form-control"
+                                                    min="0.01"
+                                                    step="0.01"
+                                                    required
+                                                    value="{{ $row['count'] }}"
+                                            >
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger remove-product-btn">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                                 <tfoot>
                                 <tr>
@@ -86,16 +124,14 @@
         </div>
     </div>
 
-    {{-- Шаблон строки --}}
+    {{-- Шаблон для новой строки продуктов --}}
     <table style="display: none;">
         <tbody>
         <tr id="product-row-template">
             <td>
                 <select name="products[__INDEX__][product_id]" class="form-control" required>
                     <option value="">Выберите продукт</option>
-                    @foreach(\App\Models\Product::query()
-                             ->where('establishment_id', auth()->user()->establishment_id)
-                             ->get() as $product)
+                    @foreach($products as $product)
                         <option value="{{ $product->id }}">{{ $product->title }}</option>
                     @endforeach
                 </select>
@@ -108,7 +144,7 @@
                         min="0.01"
                         step="0.01"
                         required
-                        value="{{ old('products.'.__INDEX__.'.count') }}"
+                        value=""
                 >
             </td>
             <td>
@@ -123,13 +159,12 @@
 
 @section('scripts')
     <script>
-        let productIndex = 0;
+        let productIndex = {{ count($oldProducts) }};
 
         document.getElementById('add-product-btn').addEventListener('click', function() {
             let template = document.getElementById('product-row-template').cloneNode(true);
             template.removeAttribute('id');
             template.style.display = '';
-
             template.innerHTML = template.innerHTML.replace(/__INDEX__/g, productIndex);
             productIndex++;
             document.querySelector('#products-table tbody').appendChild(template);
@@ -143,9 +178,11 @@
 
         document.querySelector('#products-table tbody').addEventListener('change', function(e) {
             if (e.target.matches('select[name^="products["]')) {
-                const val = e.target.value, selects = document.querySelectorAll('#products-table tbody select[name^="products["]');
+                const val = e.target.value;
+                if (!val) return;
                 let count = 0;
-                selects.forEach(s => s.value === val && count++);
+                document.querySelectorAll('#products-table tbody select[name^="products["]')
+                    .forEach(s => { if (s.value === val) count++; });
                 if (count > 1) {
                     alert('Этот продукт уже добавлен.');
                     e.target.value = '';
