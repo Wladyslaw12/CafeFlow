@@ -2,6 +2,11 @@
 @extends('admin.admin-layout')
 @section('styles')
     <link href="{{asset('admin-assets/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+    <style>
+        #data-string:hover {
+            background: #f6f6f6;
+        }
+    </style>
 @endsection
 @section('content')
     <h1 class="h3 mb-2 text-gray-800">Поставки</h1>
@@ -43,7 +48,7 @@
                     <tbody>
                     @foreach($data as $item)
                         <tr id="data-string" data-id="{{$item['id']}}"
-                            ondblclick=" window.location.href = '{{route('delivers.show', ['id' => $item['id']])}}'">
+                            ondblclick=" window.location.href = '{{route('delivers.show', ['id' => $item['id']])}}'" title="Дважды кликните, чтобы открыть">
                             <td>{{$item['id']}}</td>
                             <td>{{'№'.$item['document_number']}}</td>
                             <td>{{\Carbon\Carbon::parse($item['created_at'])->format('d.m.Y H:i')}}</td>

@@ -2,6 +2,11 @@
 @extends('admin.admin-layout')
 @section('styles')
     <link href="{{asset('admin-assets/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+    <style>
+        #data-string:hover {
+            background: #f6f6f6;
+        }
+    </style>
 @endsection
 @section('content')
     <h1 class="h3 mb-2 text-gray-800">Технологическая карта</h1>
@@ -39,7 +44,7 @@
                     <tbody>
                     @foreach($data as $item)
                         <tr id="data-string" data-id="{{$item['id']}}"
-                            ondblclick=" window.location.href = '{{route('tech-maps.show', ['id' => $item['id']])}}'">
+                            ondblclick=" window.location.href = '{{route('tech-maps.show', ['id' => $item['id']])}}'" title="Дважды кликните, чтобы открыть">
                             <td>{{$item['id']}}</td>
                             <td>{{$item['title']}}</td>
                             <td>{{$item['description']}}</td>
